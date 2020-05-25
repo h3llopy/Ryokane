@@ -40,12 +40,51 @@ from odoo.addons.http_routing.models.ir_http import url_for
 import os
 import cv2
 
+class Channel(models.Model):
+    """ A channel is a container of slides. It has group-based access configuration
+    allowing to configure slide upload and access. Slides can be promoted in
+    channels. """
+    _inherit = 'slide.channel'
+
+    @api.depends('slide_ids.slide_type', 'slide_ids.website_published','slide_ids.allow_channel_partner_ids')
+    def _count_presentations(self):
+        result = dict.fromkeys(self.ids, dict())
+        if self.visibility == 'private':
+            res = self.env['slide.slide'].read_group(
+            [('website_published', '=', True), ('channel_id', 'in', self.ids),
+            ('allow_channel_partner_ids.partner_id','=',self.env.user.partner_id.id)],
+            ['channel_id', 'slide_type'], ['channel_id', 'slide_type'],
+            lazy=False)
+        else:
+            res = self.env['slide.slide'].read_group(
+            [('website_published', '=', True), ('channel_id', 'in', self.ids)],
+            ['channel_id', 'slide_type'], ['channel_id', 'slide_type'],
+            lazy=False)
+
+        for res_group in res:
+            result[res_group['channel_id'][0]][res_group['slide_type']] = result[res_group['channel_id'][0]].get(res_group['slide_type'], 0) + res_group['__count']
+        for record in self:
+            record.nbr_presentations = result[record.id].get('presentation', 0)
+            record.nbr_documents = result[record.id].get('document', 0)
+            record.nbr_videos = result[record.id].get('video', 0)
+            record.nbr_infographics = result[record.id].get('infographic', 0)
+            record.total = record.nbr_presentations + record.nbr_documents + record.nbr_videos + record.nbr_infographics
+
+    
+class AllowChannelPartner(models.Model):
+    _name = 'allow.channel.partner'
+
+    partner_id = fields.Many2one('res.partner',string="Partner")
+    slide_id = fields.Many2one('slide.slide',string="Slide")
+    
+
 class SlideInherit(models.Model):
     _inherit = 'slide.slide'
     
     is_local_url = fields.Boolean('Use Local Video', help="Use attachments local video.",default=False)
     local_url = fields.Many2one('ir.attachment','Local Video', help="Videos attachments in slide.slide object.",domain="[('mimetype', 'like', 'video/'), ('res_model', '=', 'slide.channel'),('res_id','=',channel_id)]")
-    
+    allow_channel_partner_ids = fields.One2many('allow.channel.partner','slide_id',string="Allow Channel Partner Ids")
+
     def remove_local_video(self):
         video_path = "/tmp/local_video_v12"
         if os.path.exists(video_path):

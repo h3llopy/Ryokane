@@ -31,6 +31,7 @@
     'summary': """Website Slides Local Video.""",
     'category': 'eLearning',
     'data': [
+            'security/ir.model.access.csv',
             'data/scheduler_date.xml',
             'views/slide_slide_view.xml',
             'views/website_slides_templates_lesson_fullscreen.xml',

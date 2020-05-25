@@ -12,6 +12,17 @@
                                               'invisible': [('is_local_url','=',True)]}"/>
                     <field name="local_url" attrs="{'required': [('is_local_url','=',True)], 'invisible': [('is_local_url','=',False)]}" />
                 </xpath>
+
+                <xpath expr="//notebook/page[last()]" position="after">
+                    <page string="Allow Channel Partner Ids" name="allow_partner_channel_ids">
+                        <field name="allow_channel_partner_ids">
+                            <tree editable="bottom">
+                                <field name="partner_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
             </field>
         </record>
     </data>
