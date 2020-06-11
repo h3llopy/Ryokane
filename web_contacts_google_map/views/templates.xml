@@ -1,0 +1,67 @@
+<odoo>
+	<data>
+
+		<template id="assets_frontend" name="helpdesk_dashboard assets" inherit_id="web.assets_frontend">
+			<xpath expr="." position="inside">
+				<script type="text/javascript" src="/web_contacts_google_map/static/src/js/multiple_maps.js"/>
+			</xpath>
+		</template>
+
+		<record id="menu_find_us_map" model="website.menu">
+            <field name="name">Find Us</field>
+            <field name="url">/find_us_on_map</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">10</field>
+        </record>
+
+        <template id="find_us_on_map_view_template" name="Find Us">
+        	<t t-call="website.layout">
+            	<t t-set="additional_title">Find Us</t>
+            	<div id="wrap" class="js_sale">
+	                <div class="oe_structure" id="oe_structure_website_sale_products_1"/>
+	                <div class="container oe_website_sale">
+	                	<div class="row mt-5 mb-5">
+	                		<div class="col-md-4">
+	                			<div class="row">
+	                				<div class="col-md-12" t-foreach="partner_ids" 
+	                					t-as="partner_id">
+	                					<div class="card bg-light" style="height:200px">
+    										<div class="card-body partner_location rounded-circle">
+      											<p class="card-text"><b><span t-esc="partner_id.name"/></b>
+    											<p t-esc="partner_id" 
+												t-options='{"widget": "contact","fields": ["address", "phone", "mobile"]}'/>
+												<input type="hidden" class="partner_latitude"
+												t-att-value="partner_id.partner_latitude"/>
+												<input type="hidden" class="partner_longitude"
+												t-att-value="partner_id.partner_longitude"/>
+												<input type="hidden" class="city"
+												t-att-value="partner_id.city"/>
+												<input type="hidden" class="country"
+												t-att-value="partner_id.country_id.name"/>
+												<input type="hidden" class="map_api_key"
+												t-att-value="map_api_key"/>
+												</p>
+											</div>
+  										</div>
+	                				</div>
+	                			</div>
+	                		</div>
+	                		<div class="col-md-8">
+	                			<div class="alert alert-danger" 
+								t-if="map_api_key == undefined" role="alert">
+								Please set Google Maps API Key.
+							</div>
+							<t t-if="map_api_key">
+								<a t-att-href="'/find_us_on_map'" 
+									class="mb-3 btn btn-primary btn-sm active" role="button" aria-pressed="true">Revert Back</a>
+                				<div id="jsn" style="height:400px; max-height:400px;"/>
+                			</t>
+	                		</div>
+	                	</div>
+	                </div>
+            	</div>
+        	</t>
+    	</template>
+
+	</data>
+</odoo>
