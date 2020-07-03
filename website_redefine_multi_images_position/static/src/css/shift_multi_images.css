@@ -9,6 +9,22 @@
 	height:auto;
 }
 
+/* for show category list on mobile view */
+
+.custom_category {
+
+display: none;
+
+}
+
+@media only screen and (max-width: 600px) {
+.custom_category {
+
+    display: unset;
+
+    }
+}
+
 /* Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) */
 /* See LICENSE file for full copyright and licensing details. */
 /* License URL : <https://store.webkul.com/license.html/> */
