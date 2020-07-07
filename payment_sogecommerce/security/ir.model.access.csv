@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sogecommerce_card_system,sogecommerce.card.system,model_sogecommerce_card,base.group_system,1,1,1,1
+access_sogecommerce_language_system,sogecommerce.language.system,model_sogecommerce_language,base.group_system,1,1,1,1
