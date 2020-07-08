@@ -1,45 +1,48 @@
 @media only screen and (max-width: 600px) {
-.carousel-item {
-    min-height: 380px;
-  }
+    .carousel-item {
+        min-height: 380px;
+    }
 }
 
+
 /* for solve firefox issue */
-.oe_product_cart{
-	height:auto;
+
+.oe_product_cart {
+    height: auto;
 }
+
 
 /* for show category list on mobile view */
 
 .custom_category {
-
-display: none;
-
+    display: none;
 }
 
 @media only screen and (max-width: 600px) {
-.custom_category {
-
-    display: unset;
-
+    .custom_category {
+        display: unset;
     }
 }
 
+
 /* Copyright (c) 2016-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) */
+
+
 /* See LICENSE file for full copyright and licensing details. */
+
+
 /* License URL : <https://store.webkul.com/license.html/> */
+
 .wk-left-shift {
     width: 12%;
     float: left;
     height: 100%;
-
 }
 
 .wk-right-shift {
     width: 12%;
     float: right;
     height: 100%;
-
 }
 
 .wk-indicatiors {
@@ -73,19 +76,14 @@ display: none;
     font-weight: normal !important;
 }
 
-
 h1[itemprop=name] {
     font-size: 2.5em;
     font-weight: normal !important;
 }
 
-
 .website_redefine_css_left {
     padding: 0px !important;
-
-
 }
-
 
 #o-carousel-product .carousel-indicators li {
     background-color: transparent !important;
@@ -95,26 +93,24 @@ h1[itemprop=name] {
     width: 150px !important;
     height: 170px !important;
     padding: 0px !important;
-
     box-shadow: none !important;
-
 }
-
 
 #o-carousel-product .carousel-indicators li img {
     width: 100%;
     border: 1px solid #000000;
-
 }
 
 .carousel-inner {
     position: relative;
     width: 100%;
+    min-height: 490px;
+    max-height: 490px;
     overflow: hidden;
     border: 1px solid #000000;
 }
 
-.alternate_image_size{
+.alternate_image_size {
     /*width: 100%;*/
     /*height: 100%;*/
     border: 1px solid #000000;
