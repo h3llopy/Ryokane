@@ -104,8 +104,10 @@ h1[itemprop=name] {
 .carousel-inner {
     position: relative;
     width: 100%;
-    min-height: 490px;
-    max-height: 490px;
+    min-height: 495px;
+    max-height: 495px;
+    min-width: 406px;
+    max-width: 406px;
     overflow: hidden;
     border: 1px solid #000000;
 }
