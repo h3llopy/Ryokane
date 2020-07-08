@@ -1,138 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 	<data>
-
+		
 		<template id="assets_frontend" name="Shift Multi Images aassets_frontend" inherit_id="website.assets_frontend">
 			<xpath expr="." position="inside">
 				<link rel='stylesheet' href='/website_redefine_multi_images_position/static/src/css/shift_multi_images.css' />
 			</xpath>
-			<xpath expr="//script[last()]" position="after">
-				<script type="text/javascript" 
-				src="website_redefine_multi_images_position/static/src/js/apply_li_class.js"/>
-			</xpath>
 		</template>
-		
 
 		<template id="shop_product_carousel" inherit_id="website_sale.shop_product_carousel">
-			<xpath expr="//div[@id='o-carousel-product']" position="replace">
-				<t t-set="image_position" t-value="request.env['ir.config_parameter'].sudo().get_param('website_sale.multi_image_tab_position_settings')"/>
-				<t t-set="image_ids" t-value="product_variant.product_image_ids[:2] if product_variant else product.product_image_ids[:2]"/>
-				<t t-if="image_position == 'top'">
-					<div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0">
-						<ol class="carousel-indicators" t-if="len(image_ids) or variant_img">
-							<li t-if="variant_img" data-target="#o-carousel-product" data-slide-to="0" class="product_img_custom active">
-								<img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{product_variant.id}}/image/90x90" t-att-alt="product.name"/>
-							</li>
-							<li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if variant_img else 'active'">
-								<img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
-							</li>
-							<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-								<li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
-									<img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
-								</li>
-							</t>
-						</ol>
-						<div class="carousel-outer position-relative">
-							<div class="carousel-inner">
-								<div t-if="variant_img" class="carousel-item active" itemprop="image" t-field="product_variant.image" t-options="{'widget': 'image', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or '')}"/>
-								<div t-attf-class="carousel-item#{'' if variant_img else ' active'}" itemprop="image" t-field="product.image" t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
-								<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-									<div class="carousel-item" t-field="pimg.image" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;product_detail_img&quot;, &quot;alt-field&quot;: &quot;name&quot;, &quot;zoom&quot;: &quot;image&quot; }"/>
-								</t>
-							</div>
-							<t t-if="len(image_ids) or variant_img">
-								<a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev">
-									<span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
-								</a>
-								<a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
-									<span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
-								</a>
-							</t>
-						</div>
-					</div>
-				</t>
-				<t t-if="image_position == 'bottom'">
-					<div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0">
-						<div class="carousel-outer position-relative">
-							<div class="carousel-inner">
-								<div t-if="variant_img" class="carousel-item active" itemprop="image" t-field="product_variant.image" t-options="{'widget': 'image', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or '')}"/>
-								<div t-attf-class="carousel-item#{'' if variant_img else ' active'}" itemprop="image" t-field="product.image" t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
-								<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-									<div class="carousel-item" t-field="pimg.image" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;product_detail_img&quot;, &quot;alt-field&quot;: &quot;name&quot;, &quot;zoom&quot;: &quot;image&quot; }"/>
-								</t>
-							</div>
-							<t t-if="len(image_ids) or variant_img">
-								<a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev">
-									<span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
-								</a>
-								<a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
-									<span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
-								</a>
-							</t>
-						</div>
-						<ol class="carousel-indicators " t-if="len(image_ids) or variant_img">
-							<li t-if="variant_img" data-target="#o-carousel-product" data-slide-to="0" class="active">
-								<img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{product_variant.id}}/image/90x90" t-att-alt="product.name"/>
-							</li>
-							<li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if variant_img else 'active'">
-								<img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
-							</li>
-							<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-								<li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
-									<img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
-								</li>
-							</t>
-						</ol>
-					</div>
-				</t>
-				<t t-if="image_position == 'right'">
-					<div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0">
-						<div class="carousel-outer position-relative col-md-6 col-xl-8" style="float: left">
-							<div class="carousel-inner">
-								<div t-if="variant_img" class="carousel-item active" itemprop="image" t-field="product_variant.image" t-options="{'widget': 'image', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or '')}"/>
-								<div t-attf-class="carousel-item#{'' if variant_img else ' active'}" itemprop="image" t-field="product.image" t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
-								<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-									<div class="carousel-item" t-field="pimg.image" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;product_detail_img&quot;, &quot;alt-field&quot;: &quot;name&quot;, &quot;zoom&quot;: &quot;image&quot; }"/>
-								</t>
-							</div>
-							<t t-if="len(image_ids) or variant_img">
-								<a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev">
-									<span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
-								</a>
-								<a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
-									<span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
-								</a>
-							</t>
-                    	</div>
-						<div class="d-none d-md-block text-center" style="float: right;width: 100px;">
-							<ol class="carousel-indicators wk-indicatiors" t-if="len(image_ids) or variant_img">
-								<li t-if="variant_img" data-target="#o-carousel-product" data-slide-to="0" class="active">
-									<img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{product_variant.id}}/image/90x90" t-att-alt="product.name"/>
-								</li>
-								<li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if variant_img else 'active'">
-									<img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
-								</li>
-								<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-									<li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
-										<img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
-									</li>
-								</t>
-							</ol>
-						</div>
-					</div>
-				</t>
+            <xpath expr="//div[@id='o-carousel-product']" position="replace">
+                <t t-set="image_position" t-value="request.env['ir.config_parameter'].sudo().get_param('website_sale.multi_image_tab_position_settings')"/>
+                <t t-set="image_ids" t-value="product_variant.product_image_ids[:2] if product_variant else product.product_image_ids[:2]"/>
+                <t t-if="image_position == 'top'">
+                    <div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0">
+                        <ol class="carousel-indicators" t-if="len(image_ids) or variant_img">
+                            <li t-if="variant_img" data-target="#o-carousel-product" data-slide-to="0" class="active">
+                                <img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{product_variant.id}}/image/90x90" t-att-alt="product.name"/>
+                            </li>
+                            <li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if variant_img else 'active'">
+                                <img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
+                            </li>
+                            <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                                <li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
+                                    <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                                </li>
+                            </t>
+                        </ol>
+                        <div class="carousel-outer position-relative">
+                            <div class="carousel-inner">
+                                <div t-if="variant_img" class="carousel-item active" itemprop="image" t-field="product_variant.image" t-options="{'widget': 'image', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or '')}"/>
+                                <div t-attf-class="carousel-item#{'' if variant_img else ' active'}" itemprop="image" t-field="product.image" t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
+                                <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                                    <div class="carousel-item" t-field="pimg.image" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;product_detail_img&quot;, &quot;alt-field&quot;: &quot;name&quot;, &quot;zoom&quot;: &quot;image&quot; }"/>
+                                </t>
+                            </div>
+                            <t t-if="len(image_ids) or variant_img">
+                                <a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev">
+                                    <span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
+                                </a>
+                                <a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
+                                    <span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
+                                </a>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+                <t t-if="image_position == 'bottom'">
+                    <div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0">
+                        <div class="carousel-outer position-relative">
+                            <div class="carousel-inner">
+                                <div t-if="variant_img" class="carousel-item active" itemprop="image" t-field="product_variant.image" t-options="{'widget': 'image', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or '')}"/>
+                                <div t-attf-class="carousel-item#{'' if variant_img else ' active'}" itemprop="image" t-field="product.image" t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
+                                <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                                    <div class="carousel-item" t-field="pimg.image" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;product_detail_img&quot;, &quot;alt-field&quot;: &quot;name&quot;, &quot;zoom&quot;: &quot;image&quot; }"/>
+                                </t>
+                            </div>
+                            <t t-if="len(image_ids) or variant_img">
+                                <a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev">
+                                    <span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
+                                </a>
+                                <a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
+                                    <span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
+                                </a>
+                            </t>
+                        </div>
+                        <ol class="carousel-indicators " t-if="len(image_ids) or variant_img">
+                            <li t-if="variant_img" data-target="#o-carousel-product" data-slide-to="0" class="active">
+                                <img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{product_variant.id}}/image/90x90" t-att-alt="product.name"/>
+                            </li>
+                            <li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if variant_img else 'active'">
+                                <img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
+                            </li>
+                            <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                                <li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
+                                    <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                                </li>
+                            </t>
+                        </ol>
+                    </div>
+                </t>
+                <t t-if="image_position == 'right'">
+                    <div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0">
+                        <div class="carousel-outer position-relative col-md-6 col-xl-8" style="float: left">
+                            <div class="carousel-inner">
+                                <div t-if="variant_img" class="carousel-item active" itemprop="image" t-field="product_variant.image" t-options="{'widget': 'image', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': str(product['__last_update']) + (str(product_variant['__last_update']) or '')}"/>
+                                <div t-attf-class="carousel-item#{'' if variant_img else ' active'}" itemprop="image" t-field="product.image" t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
+                                <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                                    <div class="carousel-item" t-field="pimg.image" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;product_detail_img&quot;, &quot;alt-field&quot;: &quot;name&quot;, &quot;zoom&quot;: &quot;image&quot; }"/>
+                                </t>
+                            </div>
+                            <t t-if="len(image_ids) or variant_img">
+                                <a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev">
+                                    <span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
+                                </a>
+                                <a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
+                                    <span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
+                                </a>
+                            </t>
+                        </div>
+                        <div class="d-none d-md-block text-center" style="float: right;width: 100px;">
+                            <ol class="carousel-indicators wk-indicatiors" t-if="len(image_ids) or variant_img">
+                                <li t-if="variant_img" data-target="#o-carousel-product" data-slide-to="0" class="active">
+                                    <img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{product_variant.id}}/image/90x90" t-att-alt="product.name"/>
+                                </li>
+                                <li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" t-att-class="'' if variant_img else 'active'">
+                                    <img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/90x90" t-att-alt="product.name"/>
+                                </li>
+                                <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                                    <li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
+                                        <img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90" t-att-alt="pimg.name"/>
+                                    </li>
+                                </t>
+                            </ol>
+                        </div>
+                    </div>
+                </t>
 				<t t-if="image_position == 'left'">
 					<div id="o-carousel-product" class="carousel slide row" data-ride="carousel" data-interval="0">
 						<div t-ignore="True" class="website_redefine_css_left d-none d-md-block text-center col-xl-4 col-md-3">
 							<ol class="carousel-indicators wk-indicatiors" t-if="len(image_ids) or variant_img">
 								<li t-if="variant_img" data-target="#o-carousel-product" data-slide-to="0" class="product_img_custom">
-									<img class="img img-fluid js_variant_img_small" t-attf-src="/website/image/product.product/{{product_variant.id}}/image/300x300" t-att-alt="product.name"/>
+									<img class="img img-fluid js_variant_img_small" 
+									t-attf-src="/website/image/product.product/{{product_variant.id}}/image/300x300" t-att-alt="product.name"/>
 								</li>
 								<li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" class="product_img_custom">
-									<img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/300x300" t-att-alt="product.name"/>
+									<img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/300x300" 
+									t-att-alt="product.name"/>
 								</li>
 								<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-									<li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)" class="active product_img_custom mt-3">
+									<li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)" 
+									class="active product_img_custom mt-3">
 										<img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/300x300" t-att-alt="pimg.name"/>
 									</li>
 								</t>
@@ -158,7 +156,8 @@
 					</div>
 				</t>
 			</xpath>
-		</template>
+        </template>
+        		
 
 		<template id="add_x_studio_fields" inherit_id="website_sale.product">
 			<xpath expr="//p[hasclass('text-muted')][last()]" position="after">
@@ -181,45 +180,9 @@
            
             </xpath>
 		</template>
-	</data>
-</odoo>="" title="" aria-describedby="tooltip887544">Ajouter au Panier</a>-->
-					</t>
-				</t>
-			</t>
-			<t t-else="">
-				<a role="button" id="add_to_cart" class="a-submit btn btn-lg btn-success d-block mt-4 js_check_product" href="#" data-original-title="" title="" aria-describedby="tooltip887544">Add to Cart</a>
-			</t>
-		</xpath>
-	</template>
 
 	</data>
-</odoo>tail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
-                                <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-                                    <div class="carousel-item" t-field="pimg.image" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;product_detail_img&quot;, &quot;alt-field&quot;: &quot;name&quot;, &quot;zoom&quot;: &quot;image&quot; }"/>
-                                </t>
-                            </div>
-                            <t t-if="len(image_ids) or variant_img">
-                                <a class="carousel-control-prev" href="#o-carousel-product" role="button" data-slide="prev">
-                                    <span class="fa fa-chevron-left" role="img" aria-label="Previous" title="Previous"/>
-                                </a>
-                                <a class="carousel-control-next" href="#o-carousel-product" role="button" data-slide="next">
-                                    <span class="fa fa-chevron-right" role="img" aria-label="Next" title="Next"/>
-                                </a>
-                            </t>
-                        </div>
-                    </div>
-                </t>
-            </xpath>
-        </template>
-        		
-
-		<template id="add_x_studio_fields" inherit_id="website_sale.product">
-			<xpath expr="//p[hasclass('text-muted')][last()]" position="after">
-				<p><span t-field="product.x_studio_vidoe_link"/></p>
-				<t t-if="category">
-					<t t-if="category.parent_id">
-						<t t-if="category.parent_id.name != 'TREATMENTS'">
-							<a role="button" id="add_to_cart" class="a-submit btn btn-lg btn-success d-block mt-4 js_check_product" href="#" data-original-title="" title="" aria-describedby="tooltip887544">Add to Cart</a>
+</odoo>title="" aria-describedby="tooltip887544">Add to Cart</a>
                     	</t>
 					</t>
 					<t t-else="">
