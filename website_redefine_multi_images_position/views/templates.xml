@@ -131,10 +131,8 @@
 								<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
 									<li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)" 
 									class="active product_img_custom mt-3">
-                                    <div class="divforimage">
 										<img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/300x300" t-att-alt="pimg.name"/>
-									</div>
-                                    </li>
+									</li>
 								</t>
 							</ol>
 						</div>

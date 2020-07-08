@@ -97,12 +97,8 @@ h1[itemprop=name] {
 }
 
 #o-carousel-product .carousel-indicators li img {
-    width: 150px;
+    width: 100%;
     border: 1px solid #000000;
-}
-
-#divforimage img {
-    display: block;
 }
 
 .carousel-inner {
