@@ -101,7 +101,7 @@ h1[itemprop=name] {
     border: 1px solid #000000;
 }
 
-#divforimage {
+#divforimage img {
     display: block;
 }
 
