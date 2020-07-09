@@ -122,16 +122,16 @@
 							<ol class="carousel-indicators wk-indicatiors" t-if="len(image_ids) or variant_img">
 								<li t-if="variant_img" data-target="#o-carousel-product" data-slide-to="0" class="product_img_custom">
 									<img class="img img-fluid js_variant_img_small" 
-									t-attf-src="/website/image/product.product/{{product_variant.id}}/image/300x300" t-att-alt="product.name"/>
+									t-attf-src="/website/image/product.product/{{product_variant.id}}/image" t-att-alt="product.name"/>
 								</li>
 								<li data-target="#o-carousel-product" t-att-data-slide-to="1 if variant_img else '0'" class="product_img_custom">
-									<img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image/300x300" 
+									<img class="img img-fluid" t-attf-src="/website/image/product.template/{{product.id}}/image" 
 									t-att-alt="product.name"/>
 								</li>
 								<t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
 									<li data-target="#o-carousel-product" t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)" 
 									class="active product_img_custom mt-3">
-										<img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image/300x300" t-att-alt="pimg.name"/>
+										<img class="img img-fluid" t-attf-src="/website/image/product.image/{{pimg.id}}/image" t-att-alt="pimg.name"/>
 									</li>
 								</t>
 							</ol>
