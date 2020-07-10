@@ -8,7 +8,7 @@ class PaymentPortal(http.Controller):
 	@http.route('/find_us_on_map', type='http', auth="public", website=True)
 	def find_us_on_map(self, **kwargs):
 		map_api_key = request.env['ir.config_parameter'].sudo().get_param('website.google_maps_api_key')
-		partner_ids = request.env['res.partner'].search([('show_on_find_us_map','=',True)])
+		partner_ids = request.env['res.partner'].sudo().search([('show_on_find_us_map','=',True)])
 		google_maps_api_key = request.website.google_maps_api_key
 		values = {}
 		if google_maps_api_key:
@@ -19,7 +19,7 @@ class PaymentPortal(http.Controller):
 
 	@http.route('/show_partner_mails', type='json', auth='public', website=True)
 	def show_partner_mails(self, **kw):
-		partner_ids = request.env['res.partner'].search([('show_on_find_us_map','=',True)])
+		partner_ids = request.env['res.partner'].sudo().search([('show_on_find_us_map','=',True)])
 		address = []
 		for partner_id in partner_ids:
 			address_detais = partner_id.street or '' + ', ' + partner_id.city or '' + ', ' + partner_id.state_id.name or ''+ ' ' + partner_id.zip or ''+ ', ' + partner_id.country_id.name or ''+ ' '

@@ -21,7 +21,7 @@
 	                <div class="oe_structure" id="oe_structure_website_sale_products_1"/>
 	                <div class="container oe_website_sale">
 	                	<div class="row mt-5 mb-5">
-	                		<div class="col-md-4">
+	                		<div class="col-md-4" style="height:525px; overflow-y:scroll;">
 	                			<div class="row">
 	                				<div class="col-md-12" t-foreach="partner_ids" 
 	                					t-as="partner_id">
@@ -52,9 +52,11 @@
 								Please set Google Maps API Key.
 							</div>
 							<t t-if="map_api_key">
-								<a t-att-href="'/find_us_on_map'" 
-									class="mb-3 btn btn-primary btn-sm active" role="button" aria-pressed="true">Revert Back</a>
-                				<div id="jsn" style="height:400px; max-height:400px;"/>
+								<div class="row  mb-2 ml-1">
+									<a t-att-href="'/find_us_on_map'" 
+									class="brk-btn btn-lg active" role="button" aria-pressed="true">Vue Globale</a>
+								</div>
+                				<div id="jsn" style="height:475px; max-height:475px;"/>
                 			</t>
 	                		</div>
 	                	</div>
