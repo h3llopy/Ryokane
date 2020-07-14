@@ -3,7 +3,7 @@
             <field name="name">Gift Card</field>
             <field name="model">aspl.gift.card</field>
             <field name="arch" type="xml">
-                <form create="0" edit="0">
+                <form create="1" edit="1">
                     <sheet>
                         <group col="4">
                             <field name="card_no"/>
@@ -39,7 +39,7 @@
             <field name="name">Gift Card</field>
             <field name="model">aspl.gift.card</field>
             <field name="arch" type="xml">
-                <tree create="0">
+                <tree create="1">
                     <field name="card_no"/>
                     <field name="customer_id"/>
                     <field name="card_value"/>

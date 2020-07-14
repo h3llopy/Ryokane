@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template__" xml:space="preserve">
+    <t t-extend="GiftCardListScreenWidget">
+        <t t-jquery="table.giftcard-list" t-operation="replace">
+            <table class='giftcard-list'>
+                <thead>
+                    <tr>
+                        <th>Card No</th>
+                        <th>Card Type</th>
+                        <th>Card Value</th>
+                        <th>Customer</th>
+                        <th>Issue Date</th>
+                        <th>Expire Date</th>
+                        <th>Edit</th>
+                        <th>Recharge</th>
+                        <th>Exchange</th>
+                    </tr>
+                </thead>
+                <tbody class='giftcard-list-contents'>
+                </tbody>
+            </table>
+        </t>
+    </t>
+    <t t-extend="GiftCardlistLine">
+        <t t-jquery="td:eq(0)" t-operation="after">
+            <td>
+                <t t-esc='gift_card.card_type[1]' />
+            </td>
+        </t>
+    </t>
+</templates>
