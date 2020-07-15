@@ -83,6 +83,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     gift_card_value = fields.Float(string="Gift Card Amount")
+    card_type = fields.Many2one('aspl.gift.card.type', string="Card Type")
     gift_card_id = fields.Many2one('aspl.gift.card', string="Gift Card")
     gift_card_use_ids = fields.One2many('aspl.gift.card.use', 'order_id', string="Gift Card Use")
     receiver_email = fields.Char(string="Receiver Email")
@@ -102,9 +103,10 @@ class SaleOrder(models.Model):
                             gift_card_obj = self.env['aspl.gift.card']
                             gift_card_obj.create({
                                 'card_value': gift_card_value,
-                                'customer_id': self.env.user.partner_id.id,
+                                'customer_id': self.partner_id.id,
                                 'email': so.receiver_email,
-                                'user_name': so.receiver_name
+                                'user_name': so.receiver_name,
+                                "card_type": self.card_type.id,
                             })
                             qty -= 1
                             time.sleep(2)
@@ -116,7 +118,8 @@ class SaleOrder(models.Model):
                             })
                         self.env['gift.card.recharge'].create({
                             'card_id': so.gift_card_id.id,
-                            'amount': sale_order_line_id.price_subtotal
+                            'amount': sale_order_line_id.price_subtotal,
+                            "card_type": self.card_type.id,
                         })
             res = super(SaleOrder, self).write(vals)
             return res
