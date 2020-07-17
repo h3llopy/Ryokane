@@ -33,7 +33,7 @@ odoo.define('ryokane_pos_buttons.buttons', function(require) {
         loaded: function(self, reservation) {
             self.reservation = reservation
         }
-     });
+    });
 
 
     models.Order = models.Order.extend({
@@ -55,12 +55,9 @@ odoo.define('ryokane_pos_buttons.buttons', function(require) {
             $.extend(orders, vals);
             return orders;
 
-        }
+        },
+
     })
-
-
-
-
 
 
     var Practitioner = screens.ActionButtonWidget.extend({
@@ -80,8 +77,17 @@ odoo.define('ryokane_pos_buttons.buttons', function(require) {
                     var order = self.pos.get_order();
                     order.practitioner = practitioner;
                     models.practitioner = practitioner;
+
+                    var employee = _.find(employees_list, function(item) {
+                        return item.item === practitioner;
+
+                    });
+                    self.$el.find('span.practitioner').text(employee.label);
                 },
                 is_selected: function(practitioner) {
+
+                    self.$el.find('span.practitioner').text("Practicienne");
+                    self.pos.get_order().practitioner = false;
                     return practitioner === self.pos.get_order().practitioner;
                 }
             });
@@ -92,9 +98,9 @@ odoo.define('ryokane_pos_buttons.buttons', function(require) {
         template: 'ReservationSource',
         button_click: function() {
             var self = this;
-            var reservation_list =[]
+            var reservation_list = []
             _.each(self.pos.reservation, function(e) {
-                 reservation_list.push({ 'label': e.name, 'item': e.id})
+                reservation_list.push({ 'label': e.name, 'item': e.id })
             });
 
 
@@ -105,6 +111,11 @@ odoo.define('ryokane_pos_buttons.buttons', function(require) {
                     var order = self.pos.get_order();
                     order.reservation = reservation;
                     models.reservation = reservation;
+                    var reserv = _.find(reservation_list, function(item) {
+                        return item.item === reservation;
+
+                    });
+                    self.$el.find('span.reservation').text(reserv.label || "Reservation Source");
                 },
                 is_selected: function(reservation) {
                     return reservation === self.pos.get_order().reservation;

@@ -9,6 +9,7 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="practitioner" />
                     <field name="reservation" />
+                    <field name="salesman"/>
                 </xpath>
             </field>
         </record>
@@ -20,6 +21,7 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="practitioner" />
                     <field name="reservation" />
+                    <field name="salesman"/>
                 </xpath>
             </field>
         </record>

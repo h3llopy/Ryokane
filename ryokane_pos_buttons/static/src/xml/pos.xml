@@ -18,12 +18,17 @@
     </t>
     <t t-name="Practitioner">
         <div class='control-button'>
-            <i class='fa fa-user' /> Practitioner
+            <i class='fa fa-user' />
+            <span class="practitioner">
+                Practitioner
+            </span>
         </div>
     </t>
     <t t-name="ReservationSource">
         <div class='control-button'>
-            <i class='fa fa-user' /> Reservation Source
+            <i class='fa fa-user' /> 
+            <span class="reservation">Reservation Source
+            </span>
         </div>
     </t>
 </templates>
