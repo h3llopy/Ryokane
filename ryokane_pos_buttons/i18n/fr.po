@@ -1,0 +1,119 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ryokane_pos_buttons
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-17 19:48+0000\n"
+"PO-Revision-Date: 2020-07-17 21:49+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+"Last-Translator: \n"
+"Language: fr\n"
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_reservation__reservation_analytic_tags
+msgid "Analytic Tags"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_reservation__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_reservation__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_reservation__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_reservation__id
+msgid "ID"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_reservation____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_reservation__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_reservation__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#: model:ir.model,name:ryokane_pos_buttons.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Commandes au point de vente"
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_pos_order__practitioner
+msgid "Practicienne"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#. openerp-web
+#: code:addons/ryokane_pos_buttons/static/src/xml/pos.xml:22
+#, python-format
+msgid "Practitioner"
+msgstr "Praticienne"
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_pos_order__reservation
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_reservation__name
+msgid "Reservation"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#. openerp-web
+#: code:addons/ryokane_pos_buttons/static/src/xml/pos.xml:30
+#, python-format
+msgid "Reservation Source"
+msgstr "Source de réservation"
+
+#. module: ryokane_pos_buttons
+#. openerp-web
+#: code:addons/ryokane_pos_buttons/static/src/xml/pos.xml:8
+#, python-format
+msgid "Select Lot Number"
+msgstr "Sélectionnez le numéro de lot"
+
+#. module: ryokane_pos_buttons
+#. openerp-web
+#: code:addons/ryokane_pos_buttons/static/src/js/buttons.js:74
+#, python-format
+msgid "Select Practitioner"
+msgstr "Sélectionner un praticien"
+
+#. module: ryokane_pos_buttons
+#. openerp-web
+#: code:addons/ryokane_pos_buttons/static/src/js/buttons.js:108
+#, python-format
+msgid "Select Reservation"
+msgstr "Sélectionnez la réservation"
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_pos_order__salesman
+msgid "Venduese"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#: model:ir.model,name:ryokane_pos_buttons.model_reservation
+msgid "reservation"
+msgstr ""
