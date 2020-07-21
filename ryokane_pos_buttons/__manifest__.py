@@ -1,6 +1,6 @@
 {
     "name": "Ryokane POS Buttons",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.2.2",
     "category": "Point of Sale",
     "author": "Babatope Ajepe",
     "website": "https://ajepe.github.io",

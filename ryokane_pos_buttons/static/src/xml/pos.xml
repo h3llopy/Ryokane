@@ -31,4 +31,11 @@
             </span>
         </div>
     </t>
+       <t t-name="SalesPerson">
+        <div class='control-button'>
+            <i class='fa fa-user' /> 
+            <span class="salesperson">Sales Person
+            </span>
+        </div>
+    </t>
 </templates>

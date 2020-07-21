@@ -15,7 +15,7 @@ odoo.define("ryokane_pos_buttons.models", function(require) {
         ],
         domain: [
             ['customer', '=', true],
-            ['company_type', '=', 'person']
+            ['hcategory_id.id', '=', 10]
         ],
         loaded: function(self, partners) {
             partners = _.filter(partners, function(partner) {
@@ -29,10 +29,14 @@ odoo.define("ryokane_pos_buttons.models", function(require) {
     screens.PaymentScreenWidget.include({
         validate_order: function(force_validation) {
             var order = this.pos.get_order();
-            if (order.practitioner && order.reservation) {
+            // order.practitioner && order.reservation && order.salesperson
+            if (true) {
                 if (this.order_is_valid(force_validation)) {
                     this.finalize_validation();
                 }
+                $('span.reservation').text("Reservation Source");
+                $('span.salesperson').text("Sale Person");
+                $('span.practitioner').text("Practitioner");
 
             }else{
                 this.gui.show_popup("error", {
@@ -53,6 +57,7 @@ odoo.define("ryokane_pos_buttons.models", function(require) {
             var fields = _.find(this.models, function(model) { return model.model === 'res.partner'; }).fields;
             var domain = [
                 ['customer', '=', true],
+                ['hcategory_id.id', '=', 10],
                 ['write_date', '>', this.db.get_partner_write_date()]
             ];
             rpc.query({

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-17 19:48+0000\n"
-"PO-Revision-Date: 2020-07-17 19:48+0000\n"
+"POT-Creation-Date: 2020-07-18 16:20+0000\n"
+"PO-Revision-Date: 2020-07-18 16:20+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -87,6 +87,18 @@ msgstr ""
 
 #. module: ryokane_pos_buttons
 #. openerp-web
+#: code:addons/ryokane_pos_buttons/static/src/xml/pos.xml:37
+#, python-format
+msgid "Sales Person"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_pos_order__salesman
+msgid "Salesman"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#. openerp-web
 #: code:addons/ryokane_pos_buttons/static/src/xml/pos.xml:8
 #, python-format
 msgid "Select Lot Number"
@@ -94,25 +106,26 @@ msgstr ""
 
 #. module: ryokane_pos_buttons
 #. openerp-web
-#: code:addons/ryokane_pos_buttons/static/src/js/buttons.js:74
+#: code:addons/ryokane_pos_buttons/static/src/js/buttons.js:87
 #, python-format
 msgid "Select Practitioner"
 msgstr ""
 
 #. module: ryokane_pos_buttons
 #. openerp-web
-#: code:addons/ryokane_pos_buttons/static/src/js/buttons.js:108
+#: code:addons/ryokane_pos_buttons/static/src/js/buttons.js:121
 #, python-format
 msgid "Select Reservation"
 msgstr ""
 
 #. module: ryokane_pos_buttons
-#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_pos_order__salesman
-msgid "Venduese"
+#. openerp-web
+#: code:addons/ryokane_pos_buttons/static/src/js/buttons.js:151
+#, python-format
+msgid "Select Salesperson"
 msgstr ""
 
 #. module: ryokane_pos_buttons
 #: model:ir.model,name:ryokane_pos_buttons.model_reservation
 msgid "reservation"
 msgstr ""
-

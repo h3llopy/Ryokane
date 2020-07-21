@@ -117,3 +117,23 @@ msgstr ""
 #: model:ir.model,name:ryokane_pos_buttons.model_reservation
 msgid "reservation"
 msgstr ""
+
+
+#. module: ryokane_pos_buttons
+#. openerp-web
+#: code:addons/ryokane_pos_buttons/static/src/xml/pos.xml:37
+#, python-format
+msgid "Sales Person"
+msgstr "Vendeuse"
+
+#. module: ryokane_pos_buttons
+#: model:ir.model.fields,field_description:ryokane_pos_buttons.field_pos_order__salesman
+msgid "Vendeuse"
+msgstr ""
+
+#. module: ryokane_pos_buttons
+#. openerp-web
+#: code:addons/ryokane_pos_buttons/static/src/js/buttons.js:151
+#, python-format
+msgid "Select Salesperson"
+msgstr "Sélectionnez un vendeur"

@@ -7,20 +7,13 @@ class PosOrder(models.Model):
     @api.model
     def _order_fields(self, ui_order):
         res = super(PosOrder, self)._order_fields(ui_order)
-        res.update(reservation=ui_order.get("reservation"), practitioner=ui_order.get("practitioner"))
+        res.update(reservation=ui_order.get("reservation"), practitioner=ui_order.get("practitioner"), salesman=ui_order.get("salesperson"))
         return res
 
     practitioner = fields.Many2one(comodel_name="hr.employee", string="Practicienne")
     reservation = fields.Many2one(comodel_name='reservation', string="Reservation")
-    salesman = fields.Many2one(comodel_name="hr.employee", string="Venduese", required=True, compute='_compute_salesman')
+    salesman = fields.Many2one(comodel_name="hr.employee", string="Salesman", required=False)
 
-    @api.depends("session_id")
-    def _compute_salesman(self):
-        employee = self.env['hr.employee']
-        for rec in self:
-            user_id = rec.session_id.user_id.id
-            emp = employee.search([('user_id', '=', user_id)], limit=1)
-            rec.salesman = emp.id if emp else False
 
 
 class Reservation(models.Model):

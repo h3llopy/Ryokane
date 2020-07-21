@@ -17,10 +17,26 @@ odoo.define('ryokane_pos_buttons.buttons', function(require) {
         model: 'hr.employee',
         fields: ['name'],
         domain: [
+            ['active', '=', true],
+            ['department_id.name', 'ilike', 'SPA']
 
         ],
         loaded: function(self, employees) {
-            self.employees = employees
+            self.employees = employees;
+            // self.salespersons = employees
+        }
+    });
+
+    models.load_models({
+        model: 'hr.employee',
+        fields: ['name'],
+        domain: [
+            ['active', '=', true],
+            ['department_id.name', 'ilike', 'SPA']
+
+        ],
+        loaded: function(self, salespersons) {
+            self.salespersons = salespersons
         }
     });
 
@@ -51,6 +67,7 @@ odoo.define('ryokane_pos_buttons.buttons', function(require) {
             var vals = {
                 'practitioner': this.practitioner,
                 'reservation': this.reservation,
+                'salesperson': this.salesperson,
             };
             $.extend(orders, vals);
             return orders;
@@ -124,6 +141,37 @@ odoo.define('ryokane_pos_buttons.buttons', function(require) {
         },
     });
 
+    var SalesPerson = screens.ActionButtonWidget.extend({
+        template: 'SalesPerson',
+        button_click: function() {
+            var self = this;
+            var salespersons_list = []
+            _.each(self.pos.salespersons, function(e) {
+                salespersons_list.push({ 'label': e.name, 'item': e.id })
+            });
+
+
+            self.gui.show_popup('selection', {
+                title: _t('Select Salesperson'),
+                list: salespersons_list,
+                confirm: function(salesperson) {
+                  
+                    var order = self.pos.get_order();
+                    order.salesperson = salesperson;
+                    models.salesperson = salesperson;
+                    var reserv = _.find(salespersons_list, function(item) {
+                        return item.item === salesperson;
+
+                    });
+                    self.$el.find('span.salesperson').text(reserv.label || "Salesperson");
+                },
+                is_selected: function(salesperson) {
+                    return salesperson === self.pos.get_order().salesperson;
+                }
+            });
+        },
+    });
+
     screens.define_action_button({
         'name': 'practitioner',
         'widget': Practitioner,
@@ -134,6 +182,12 @@ odoo.define('ryokane_pos_buttons.buttons', function(require) {
         'widget': Reservation,
 
     });
+    screens.define_action_button({
+        'name': 'salesperson',
+        'widget': SalesPerson,
+
+    });
 
 
 });
+
