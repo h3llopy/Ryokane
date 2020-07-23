@@ -51,6 +51,9 @@ class PosOrder(models.Model):
                         'customer_id':create_details.get('giftcard_customer') or False,
                         'expire_date':create_details.get('giftcard_expire_date'),
                         'card_type':create_details.get('card_type'),
+                        'user_name': create_details.get('user_name'),
+                        'email': create_details.get('email'),
+                        'receiver_msg': create_details.get('receiver_msg'),
                     }
                     self.env['aspl.gift.card'].create(vals)
 
