@@ -12,7 +12,7 @@
 {
     'name': 'Odoo Website Gift Card (Enterprise)',
     'summary': 'This module allows user to purchase giftcard,use giftcard and also recharge giftcard.',
-    'version': '1.0',
+    'version': '1.1',
     'description' :"""This module allows user to purchase giftcard,use giftcard and also recharge giftcard.""",
     'author': 'Acespritech Solutions Pvt. Ltd.',
     'category': 'Website',

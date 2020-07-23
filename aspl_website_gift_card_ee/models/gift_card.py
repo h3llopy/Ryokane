@@ -33,8 +33,7 @@ class WebsiteGiftCard(models.Model):
     # used_line = fields.One2many('gift.card.use', 'card_id', string="Used Line", oncascade='delete')
     # recharge_line = fields.One2many('gift.card.recharge', 'card_id', string="Recharge Line", oncascade='delete')
     encrypted_id = fields.Char(string='Encrypted Id')
-    # email = fields.Char(string="Email")
-    # user_name = fields.Char(string="User Name")
+    receiver_msg = fields.Char(string="Receiver Message")
 
     @api.model
     def create(self, vals):
@@ -88,6 +87,7 @@ class SaleOrder(models.Model):
     gift_card_use_ids = fields.One2many('aspl.gift.card.use', 'order_id', string="Gift Card Use")
     receiver_email = fields.Char(string="Receiver Email")
     receiver_name = fields.Char(string="Receiver Name")
+    receiver_msg = fields.Char(string="Personal Message")
 
     @api.multi
     def write(self, vals):
@@ -107,6 +107,7 @@ class SaleOrder(models.Model):
                                 'email': so.receiver_email,
                                 'user_name': so.receiver_name,
                                 "card_type": self.card_type.id,
+                                "receiver_msg": self.receiver_msg,
                             })
                             qty -= 1
                             time.sleep(2)

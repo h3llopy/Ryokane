@@ -524,6 +524,10 @@ odoo.define('aspl_gift_card.giftcard', function (require) {
                             'giftcard_amount': $('#text_amount').val(),
                             'giftcard_customer_name': $("#select_customer").val(),
                             'card_type': $('#select_card_type').val(),
+                            'user_name': $('#reciever_name').val(),
+                            'email': $('#reciever_email').val(),
+                            'receiver_msg': $('#receiver_msg').val(),
+                            
                         }
                         if(self.pos.config.msg_before_card_pay) {
                         	self.gui.show_popup('confirmation_card_payment',{'card_data':gift_order});
@@ -560,6 +564,9 @@ odoo.define('aspl_gift_card.giftcard', function (require) {
                         		'customer_id':self.partner_id ? Number(self.partner_id) : false,
                         		'expire_date':$('#text_expire_date').val(),
                         		'card_type': Number($('#select_card_type').val()),
+                                'user_name':$('#reciever_name').val(),
+                                'email':$('#reciever_email').val(),
+                                'receiver_msg': $('#receiver_msg').val(),
                         	}]
                         }
                         rpc.query(params, {async: false});

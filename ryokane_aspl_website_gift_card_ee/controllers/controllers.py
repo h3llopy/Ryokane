@@ -25,6 +25,7 @@ class WebsiteSale(WebsiteSale):
             order_id.write({
                 'receiver_email': kw.get('receiver_email'),
                 'receiver_name': kw.get('receiver_name'),
+                'receiver_msg':kw.get('receiver_msg'),
             })
             order_id._cart_update(
                 product_id=int(gift_card_id),

@@ -61,6 +61,8 @@ class aspl_gift_card(models.Model):
     is_active = fields.Boolean('Active', default=True)
     used_line = fields.One2many('aspl.gift.card.use', 'card_id', string="Used Line")
     recharge_line = fields.One2many('aspl.gift.card.recharge', 'card_id', string="Recharge Line")
+    email = fields.Char(string="Email")
+    user_name = fields.Char(string="User Name")
 
     @api.multi
     def write(self, vals):

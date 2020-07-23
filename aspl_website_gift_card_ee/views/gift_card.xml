@@ -73,6 +73,12 @@
                                                        placeholder="Receiver Email" required="1"/>
                                                 <br/>
                                             </div>
+                                                <div class="col-sm-12">
+                                                <input type="text" class="form-control"
+                                                       id="receiver_msg" name="receiver_msg"
+                                                       placeholder="Personal Message" required="1"/>
+                                                <br/>
+                                            </div>
                                             <div class="col-sm-6">
                                                 <input type="hidden" name="csrf_token"
                                                        t-att-value="request.csrf_token()"/>

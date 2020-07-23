@@ -101,4 +101,20 @@
                 </xpath>
             </field>
         </record>
+
+            <record id="aspl_gift_card_form" model="ir.ui.view">
+            <field name="name">aspl.gift.card.form</field>
+            <field name="model">aspl.gift.card</field>
+            <field name="inherit_id" ref="aspl_gift_card.aspl_gift_card_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='card_type']" position="after">
+                    <field name="email" />
+                    <field name="user_name" />
+                    <field name="receiver_msg"/>
+                </xpath>
+         
+           
+            </field>
+        </record>
 </odoo>
+

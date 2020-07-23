@@ -18,4 +18,15 @@
     <template id="gift_card_details" inherit_id="aspl_website_gift_card_ee.gift_card_details">
         <xpath expr="//div//div[1]//div[4]" position="replace" />
     </template>
+    <template id="gift_card" inherit_id="aspl_website_gift_card_ee.gift_card_details">
+        <xpath expr="//form/div/div[2]" position="after">
+            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+        </xpath>
+    </template>
 </odoo>
