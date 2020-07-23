@@ -170,8 +170,8 @@
                                     <input type="text"  class="text_amount" t-raw="widget.giftCarValues"/>
                                 </t> -->
                                 <div class="form-group">
-                                    <select  class="form-control" id="text_amount">
-                                        <option></option>
+                                    <select id="text_amount" required="1"> 
+                                        <option>Select Card value </option>
                                         <t t-foreach="widget.giftCarValues" t-as="gvalues">
                                             <option t-attf-value="{{gvalues}}"><t t-esc="gvalues"/></option>
                                         </t>
