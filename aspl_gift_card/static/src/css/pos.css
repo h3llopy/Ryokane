@@ -209,10 +209,10 @@ object{
 }
 .create_gift_card{
     width: 500px !important;
-    height: 500px !important;
+    height: 600px !important;
 }
 .edit_gift_card{
-    height: 365px !important;
+    height: 500px !important;
 }
 .edit_gift_card table{
     border-spacing: 28px;
