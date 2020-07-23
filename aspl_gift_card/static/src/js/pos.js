@@ -1157,7 +1157,12 @@ odoo.define('aspl_gift_card.giftcard', function(require) {
                     'giftcard_amount': self.options.giftcard_amount,
                     'giftcard_customer_name': self.options.giftcard_customer_name,
                     'card_type': self.options.card_type,
+                    'user_name': self.options.user_name,
+                    'email': self.options.email,
+                    'receiver_msg': self.options.receiver_msg,
                 }
+
+
                 order.set_giftcard(gift_order);
                 self.gui.show_screen('payment');
                 $("#card_back").hide();
