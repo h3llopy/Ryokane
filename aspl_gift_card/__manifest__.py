@@ -12,7 +12,7 @@
 
 {
     'name': 'POS Gift Card',
-    'version': '1.3',
+    'version': '1.4',
     'category': 'Point of Sale',
     'summary': 'This module allows user to purchase giftcard,use giftcard and also recharge giftcard.',
     'description': """
