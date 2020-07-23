@@ -23,6 +23,8 @@ class website_sale_product(WebsiteSale):
         '''/shop/category/<model("product.public.category", "[('website_id', 'in', (False, current_website_id))]"):category>/page/<int:page>'''
     ], type='http', auth="public", website=True)
     def shop(self, page=0, category=None, search='', ppg=False, **post):
+        category = request.env['product.public.category']
+        category = Category.search([('id', '=', int(category))], limit=1)
         if category and not category.can_access_from_current_website():
             raise NotFound()
         if ppg:
