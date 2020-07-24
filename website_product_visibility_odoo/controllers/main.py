@@ -24,9 +24,13 @@ class website_sale_product(WebsiteSale):
     ], type='http', auth="public", website=True)
     def shop(self, page=0, category=None, search='', ppg=False, **post):
         Category = request.env['product.public.category']
-        category = Category.search([('id', '=', int(category))], limit=1)
-        if category and not category.can_access_from_current_website():
-            raise NotFound()
+        if category:
+            category = Category.search([('id', '=', int(category))], limit=1)
+            if not category or not category.can_access_from_current_website():
+                raise NotFound()
+        else:
+            category = Category
+
         if ppg:
             try:
                 ppg = int(ppg)
