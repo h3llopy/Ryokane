@@ -142,11 +142,10 @@
                                 </t>
                             </td>
                         </tr>
-            
                         <tr>
                             <td>Reciever Name </td>
                             <td>
-                                <input type="text" id="reciever_name"/>
+                                <input type="text" id="reciever_name" />
                             </td>
                         </tr>
                         <tr>
@@ -155,23 +154,30 @@
                                 <input type="text" id="reciever_email" />
                             </td>
                         </tr>
-                          <tr>
+                        <tr>
                             <td>Reciever Message </td>
                             <td>
                                 <input type="text" id="receiver_msg" />
                             </td>
                         </tr>
-              
-            
                         <tr id="amount_row">
                             <td>Card value </td>
                             <td>
-                                <t t-if="widget.panding_card and widget.panding_card.giftcard_amount">
+                                <!--    <t t-if="widget.panding_card and widget.panding_card.giftcard_amount">
                                     <input type="text" id="text_amount" class="text_amount" t-att-value="widget.panding_card.giftcard_amount" />
-                                </t>
-                                <t t-if="!widget.panding_card || !widget.panding_card.giftcard_amount">
-                                    <input type="text" id="text_amount" class="text_amount" />
-                                </t>
+                                </t> -->
+                                <!--       <t t-if="!widget.panding_card || !widget.panding_card.giftcard_amount">
+                                    <input type="text"  class="text_amount" t-raw="widget.giftCarValues"/>
+                                </t> -->
+                                <div class="form-group">
+                                    <select id="text_amount" required="1"> 
+                                        <option>Select Card value </option>
+                                        <t t-foreach="widget.giftCarValues" t-as="gvalues">
+                                            <option t-attf-value="{{gvalues}}"><t t-esc="gvalues"/></option>
+                                        </t>
+                               
+                                    </select>
+                                </div>
                             </td>
                         </tr>
                         <tr>
