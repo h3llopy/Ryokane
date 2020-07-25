@@ -11,6 +11,11 @@ from odoo.addons.aspl_website_gift_card_ee.controllers.main import WebsiteSale
 
 
 class WebsiteSale(WebsiteSale):
+
+    def _get_search_order(self, post):
+        # OrderBy will be parsed in orm and so no direct sql injection
+        # id is added to be sure that order is a unique sort key
+        return 'is_published desc,%s , id desc' % post.get('order', 'website_sequence asc')
  
 
     @http.route(['/buy_gift_card'], type='http', csrf=False, method=['post'], auth="public", website=True)
