@@ -5,6 +5,10 @@
 from odoo import api, fields, models, _
 from odoo.tools import float_compare, float_is_zero
 
+# class AccountAssetDepreciation(models.Model):
+#     _inherit = 'account.asset.depreciation'
+
+#     analytic_tag_ids = fields.Many2many('account.analytic.tag', string='Analytic Tags')
 
 class AccountAssetDepreciationLine(models.Model):
     _inherit = 'account.asset.depreciation.line'
