@@ -8,7 +8,7 @@
     'category': 'Sale',
     'website': 'https://www.bas.sarl',
     'version': '12.0.1.0.3',
-    'depends': ['base', 'purchase', 'sale', 'contacts', 'stock_landed_costs'],
+    'depends': ['base', 'purchase', 'sale', 'contacts', 'stock_landed_costs', 'account_asset'],
     'data': [
         'views/order_line.xml',
         'views/manufacturing_view.xml',

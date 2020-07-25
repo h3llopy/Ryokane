@@ -65,6 +65,10 @@ class POSOrder(models.Model):
         return res
 
 
+    def create_picking(self):
+        return super(POSOrder, self.with_context({'pos_analytic_tag_ids'})).create_picking()
+
+
 class PosSession(models.Model):
     _inherit = 'pos.session'
 
