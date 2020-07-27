@@ -70,7 +70,7 @@ class AnalyticTagInvoice(models.Model):
 class StockPickingDelivery(models.Model):
     _inherit = 'stock.move'
 
-    # analytic_tag_id = fields.Many2many('account.analytic.tag', String='Analytic Tag')
+    analytic_tag_ids = fields.Many2many('account.analytic.tag', String='Analytic Tag')
 
     @api.model
     def create(self, vals):
@@ -84,11 +84,16 @@ class StockPickingDelivery(models.Model):
                 'analytic_tag_ids': res.purchase_line_id.analytic_tag_ids.ids
             })
 
-        if not (res.purchase_line_id or res.sale_line_id or res.inventory_id or res.production_id or res.raw_material_production_id):
-            config = self.env['pos.config'].search([])
-            res.update({
-                'analytic_tag_ids': config.analytic_tag_ids.ids
+        if self.env.context.get('pos_analytic_tag_ids'):
+              res.update({
+                'analytic_tag_ids': self.env.context.get('pos_analytic_tag_ids')
             })
+
+        # if not (res.purchase_line_id or res.sale_line_id or res.inventory_id or res.production_id or res.raw_material_production_id):
+        #     config = self.env['pos.config'].search([])
+        #     res.update({
+        #         'analytic_tag_ids': config.analytic_tag_ids.ids
+        #     })
         return res
 
 

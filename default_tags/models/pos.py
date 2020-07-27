@@ -19,7 +19,7 @@ class POSOrderLine(models.Model):
     @api.model
     def create(self, vals):
         res = super(POSOrderLine, self).create(vals)
-        config = self.env['pos.config'].search([])
+        config = self.env['pos.config'].search([], limit=1)
         res.update({
             'analytic_tag_ids': [(6, 0, config.analytic_tag_ids.ids)]
         })
@@ -63,6 +63,10 @@ class POSOrder(models.Model):
                     'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)]
                 })
         return res
+
+
+    def create_picking(self):
+        return super(POSOrder, self.with_context({'pos_analytic_tag_ids': self.analytic_tag_ids.ids})).create_picking()
 
 
 class PosSession(models.Model):
