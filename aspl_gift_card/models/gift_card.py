@@ -86,7 +86,7 @@ class aspl_gift_card_use(models.Model):
     _description = 'Gift card use'
     _order = 'id desc'
 
-    card_id = fields.Many2one('aspl.gift.card', string="Card", readonly=True)
+    card_id = fields.Many2one('aspl.gift.card', string="Card", readonly=False)
     customer_id = fields.Many2one('res.partner', string = "Customer")
     pos_order_id = fields.Many2one("pos.order", string = "Order")
     order_date = fields.Date(string = "Order Date")
