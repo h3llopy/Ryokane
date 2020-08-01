@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="layout_main_object_popup" name="Main layout" inherit_id="website.layout">
+        <xpath expr="//t[@t-set='html_data']" position="replace">
+            <t t-set="html_data" t-value="{
+                'lang': lang and lang.replace('_', '-'),
+                'data-website-id': website.id if website else None,
+                'data-editable': '1' if editable else None,
+                'data-translatable': '1' if translatable else None,
+                'data-edit_translations': '1' if edit_translations else None,
+                'data-view-xmlid': xmlid if editable or translatable else None,
+                'data-viewid': viewid if editable or translatable else None,
+                'data-main-object': repr(main_object) if editable or translatable else None,
+                'data-oe-company-name': res_company.name,
+                'data-main-object-popup': repr(main_object) if website else None,
+            }"/>
+        </xpath>
+    </template>
+</odoo>
