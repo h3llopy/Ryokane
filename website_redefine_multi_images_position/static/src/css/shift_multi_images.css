@@ -85,7 +85,7 @@ h1[itemprop=name] {
     padding: 0px !important;
 }
 
-#o-carousel-product .carousel-indicators li {
+#o-carouselle-product .carouselle-indicators li {
     background-color: transparent !important;
     border-radius: 0;
     display: block;
@@ -96,12 +96,12 @@ h1[itemprop=name] {
     box-shadow: none !important;
 }
 
-#o-carousel-product .carousel-indicators li img {
+#o-carouselle-product .carouselle-indicators li img {
     width: 100%;
     border: 1px solid #000000;
 }
 
-.carousel-inner {
+.carouselle-inner {
     position: relative;
     width: 100%;
     min-height: 495px;
