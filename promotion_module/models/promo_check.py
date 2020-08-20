@@ -2,6 +2,7 @@ from odoo import api, fields, models, _
 
 
 class PromoClass(models.Model):
+    _name = 'sale.coupon.promo'
     _inherit = 'sale.coupon.program'
 
 
