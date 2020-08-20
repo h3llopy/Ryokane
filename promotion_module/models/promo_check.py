@@ -2,8 +2,7 @@ from odoo import api, fields, models, _
 
 
 class PromoClass(models.Model):
-    _name = 'sale.coupon.promo'
-    _inherit = "sale.coupon.program"
+    _inherit = 'sale.coupon.program'
 
 
 def _filter_not_ordered_reward_programs(self, order):
