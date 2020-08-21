@@ -12,7 +12,7 @@ class PromoClass(models.Model):
         """
         Returns the programs when the reward is actually in the order lines
         """
-	raise UserError(_('Malek in F1'))
+        raise UserError(_('Malek in F1'))
         programs = self.env['sale.coupon.program']
         for program in self:
             if program.reward_type == 'product' and \
