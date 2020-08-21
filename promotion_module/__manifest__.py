@@ -5,7 +5,7 @@
     'description': """This Module Allows to Set  Promotion Offers On Products And Product Categories.""",
     'author': "BAS",
     'category': 'Sales',
-    'depends': ['sale', 'website_sale','account'],
+    'depends': ['sale', 'website_sale','website_sale_coupon','account'],
     'installable': True,
     'auto_install': False,
 }
