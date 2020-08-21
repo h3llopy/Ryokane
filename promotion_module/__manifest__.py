@@ -6,6 +6,9 @@
     'author': "BAS",
     'category': 'Sales',
     'depends': ['sale', 'sale_coupon','account'],
+    'data': [
+        'security/ir.model.access.csv',
+    ],
     'installable': True,
     'auto_install': False,
 }
