@@ -4,7 +4,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 class PromoClass(models.Model):
-    _inherit = ['website_sale_coupon']
+    _inherit = 'website.sale.coupon'
     _name= 'website_sale_coupon'
 
 
@@ -25,7 +25,7 @@ class PromoClass(models.Model):
         return programs
 
 class SalesClass(models.Model):
-    _inherit = ['sale.order']
+    _inherit = 'sale.order'
     _name= 'sale_order'
 
     def _put_reward_values_product(self, program):
