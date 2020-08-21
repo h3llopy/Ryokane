@@ -4,7 +4,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 class PromoClass(models.Model):
-    _inherit = 'sale_coupon'
+    _inherit = 'sale.coupon'
     _name= 'sale_coupon'
 
 
