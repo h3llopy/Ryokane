@@ -4,8 +4,8 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 class PromoClass(models.Model):
-    _inherit = ['sale.coupon.program']
-    _name= 'sale_coupon_program'
+    _inherit = ['website.sale.coupon']
+    _name= 'website_sale_coupon'
 
 
     def _filter_not_ordered_reward_programs(self, order):
