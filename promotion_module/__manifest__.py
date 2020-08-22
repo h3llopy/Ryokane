@@ -5,7 +5,7 @@
     'description': """This Module Allows to Set  Promotion Offers On Products And Product Categories.""",
     'author': "BAS",
     'category': 'Sales',
-    'depends': ['sale', 'sale_coupon','account'],
+    'depends': ['sale_management', 'sale_coupon','account'],
     'data': [
         'security/ir.model.access.csv',
     ],

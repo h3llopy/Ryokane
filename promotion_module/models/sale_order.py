@@ -11,7 +11,7 @@ class SalesClass(models.Model):
 
     def _put_reward_values_product(self, program):
         _logger.info('WAFI: put reward values product')
-        price_unit = self.order_line.filtered(lambda line: program.reward_product_id == line.product_id)[0].price_unit
+        #price_unit = self.order_line.filtered(lambda line: program.reward_product_id == line.product_id)[0].price_unit
 
         order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._is_valid_product(x.product_id))
         reward_qty= program.reward_product_quantity
