@@ -13,7 +13,7 @@ class SalesClass(models.Model):
         _logger.info('WAFI: put reward values product')
         #price_unit = self.order_line.filtered(lambda line: program.reward_product_id == line.product_id)[0].price_unit
 
-        order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._is_valid_product(x.product_id))
+        #order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._is_valid_product(x.product_id))
         reward_qty= program.reward_product_quantity
         # Take the default taxes on the reward product, mapped with the fiscal position
         taxes = program.reward_product_id.taxes_id
