@@ -15,7 +15,7 @@ class PromoClass(models.Model):
         """
         Returns the programs when the reward is actually in the order lines
         """
-        raise UserError(_('Malek in F1'))
+        _logger.info('WAFI: not ordered reward program')
         programs = self.env['sale.coupon.program']
         for program in self:
             if program.reward_type == 'product' and \
@@ -32,7 +32,7 @@ class SalesClass(models.Model):
     _name= 'sale_order'
 
     def _put_reward_values_product(self, program):
-        raise UserError(_('Malek in F2'))
+        _logger.info('WAFI: put reward values product')
         price_unit = self.order_line.filtered(lambda line: program.reward_product_id == line.product_id)[0].price_unit
 
         order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._is_valid_product(x.product_id))
