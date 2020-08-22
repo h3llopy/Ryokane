@@ -2,9 +2,12 @@ from dateutil import parser
 from datetime import datetime
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class PromoClass(models.Model):
-    _inherit = 'sale.coupon'
+    _inherit = 'sale.coupon.program'
     _name= 'sale_coupon'
 
 
