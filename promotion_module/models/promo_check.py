@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 
 class PromoClass(models.Model):
     _inherit = 'sale.coupon.program'
-    _name= 'sale_coupon'
+    _name= 'sale.coupon.program'
 
 
     def _filter_not_ordered_reward_programs(self, order):
