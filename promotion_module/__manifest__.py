@@ -1,15 +1,16 @@
 {
-    'name': 'Odoo Promotion',
-    'summary': '',
-    'version': '1.0',
-    'description' :"""""",
-    'author': 'BAS SARL',
-    'category': 'Website',
-    'website': "http://www.BAS.SARL",
-    'depends' : ['base', 'website_sale', 'sale', 'website'],
-    'data' : [
+    'name': "Sale Promotion",
+    'version': '12.0.1.0.11',
+    'summary': """Create Promotion Offers For Sales""",
+    'description': """This Module Allows to Set  Promotion Offers On Products And Product Categories.""",
+    'author': "BAS",
+    'category': 'Sales',
+    'depends': ['sale_management', 'sale_coupon','account'],
+    'data': [
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'auto_install': False,
 }
+
 
