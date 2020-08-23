@@ -25,7 +25,7 @@ class SalesClass(models.Model):
         }
 
     def _get_reward_values_product(self, program):
-        _logger.info('WAFI: _get_reward_values_product)
+        _logger.info('WAFI: _get_reward_values_product')
         _logger.info(self)
 
         price_unit = self.order_line.filtered(lambda line: program.reward_product_id == line.product_id)[0].price_reduce
