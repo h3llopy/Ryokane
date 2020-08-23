@@ -1,6 +1,6 @@
 {
     'name': "Sale Promotion",
-    'version': '12.0.1.0.13',
+    'version': '12.0.1.0.14',
     'summary': """Create Promotion Offers For Sales""",
     'description': """This Module Allows to Set  Promotion Offers On Products And Product Categories.""",
     'author': "BAS",
