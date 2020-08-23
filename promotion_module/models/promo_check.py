@@ -47,25 +47,28 @@ class PromoClass(models.Model):
         i.e Buy 1 imac + get 1 ipad mini free then check 1 imac is on cart or not
         or  Buy 1 coke + get 1 coke free then check 1 coke is on cart or not
         """
+        _logger.info('WAFI: filter_programs_on_products:')
         order_lines = order.order_line.filtered(lambda line: line.product_id) - order._get_reward_lines()
         products = order_lines.mapped('product_id')
         products_qties = dict.fromkeys(products, 0)
         for line in order_lines:
             products_qties[line.product_id] += line.product_uom_qty
         valid_programs = self.filtered(lambda program: not program.rule_products_domain)
+        _logger.info('valid_programs start')
+        _logger.info(valid_programs)
         for program in self - valid_programs:
             valid_products = program._get_valid_products(products)
-            _logger.info('WAFI: filter_programs_on_products:')
             _logger.info(valid_products)
             ordered_rule_products_qty = sum(products_qties[product] for product in valid_products)
             _logger.info(ordered_rule_products_qty)
+            _logger.info(program.rule_min_quantity)
             # Avoid program if 1 ordered foo on a program '1 foo, 1 free foo'
             #if program.promo_applicability == 'on_current_order' and \
             #   program._is_valid_product(program.reward_product_id) and program.reward_type == 'product':
             #    ordered_rule_products_qty -= program.reward_product_quantity
             if ordered_rule_products_qty >= program.rule_min_quantity:
                 valid_programs |= program
-            _logger.info('valid_programs')
+            _logger.info('valid_programs end')
             _logger.info(valid_programs)
         return valid_programs
 
