@@ -3,7 +3,7 @@
     <template id="assets" inherit_id="point_of_sale.assets">
         <xpath expr=".">
             <script type="text/javascript" src="/ryokane_pos_buttons/static/src/js/models.js" />
-            <script type="text/javascript" src="/ryokane_pos_buttons/static/src/js/chrome.js"/>
+            <!-- <script type="text/javascript" src="/ryokane_pos_buttons/static/src/js/chrome.js"/> -->
             <script type="text/javascript" src="/ryokane_pos_buttons/static/src/js/buttons.js"/>
             <link rel="stylesheet" href="/ryokane_pos_buttons/static/src/css/pos.css" />
         </xpath>
