@@ -7,7 +7,7 @@ import logging
 _logger = logging.getLogger(__name__)
 class SalesClass(models.Model):
     _inherit = 'sale.order'
-    _name= 'sale.order'
+#    _name= 'sale.order'
 
     def _put_reward_values_product(self, program):
         _logger.info('WAFI: put reward values product')
