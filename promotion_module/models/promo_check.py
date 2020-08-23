@@ -20,7 +20,8 @@ class PromoClass(models.Model):
         for program in self:
             if program.reward_type == 'product' and \
                not order.order_line.filtered(lambda line: line.product_id == program.reward_product_id):
-                order.write({'order_line': [(0, False, value) for value in order._put_reward_values_product(order, program)]})
+                #order.write({'order_line': [(0, False, value) for value in order._put_reward_values_product(program)]})
+                _logger.info(order._put_reward_values_product(program))
             elif program.reward_type == 'discount' and program.discount_apply_on == 'specific_product' and \
                not order.order_line.filtered(lambda line: line.product_id == program.discount_specific_product_id):
                 continue

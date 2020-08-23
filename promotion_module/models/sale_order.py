@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 import logging
 
 _logger = logging.getLogger(__name__)
+
 class SalesClass(models.Model):
     _inherit = 'sale.order'
 #    _name= 'sale.order'
