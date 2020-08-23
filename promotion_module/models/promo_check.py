@@ -15,13 +15,14 @@ class PromoClass(models.Model):
         """
         Returns the programs when the reward is actually in the order lines
         """
-        _logger.info('WAFI: not ordered reward program')
+        _logger.info('WAFI: not ordered reward program' + self)
         programs = self.env['sale.coupon.program']
         for program in self:
             if program.reward_type == 'product' and \
                not order.order_line.filtered(lambda line: line.product_id == program.reward_product_id):
                 #order.write({'order_line': [(0, False, value) for value in order._put_reward_values_product(program)]})
-                _logger.info(order._put_reward_values_product(program))
+                _logger.info('WAFI: ' + program)
+                _logger.info('WAFI: ' + order._put_reward_values_product(program))
             elif program.reward_type == 'discount' and program.discount_apply_on == 'specific_product' and \
                not order.order_line.filtered(lambda line: line.product_id == program.discount_specific_product_id):
                 continue
