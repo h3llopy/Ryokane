@@ -23,7 +23,7 @@ class SalesClass(models.Model):
                     order._create_reward_coupon(program)
                 elif program.discount_line_product_id.id not in self.order_line.mapped('product_id').ids:
                     if program.reward_type == 'product':
-                        self.write({'order_line': [(0, False, self._put_reward_values_product(program)]})
+                        self.write({'order_line': [(0, False, self._put_reward_values_product(program))]})
                     self.write({'order_line': [(0, False, value) for value in self._get_reward_line_values(program)]})
                 order.no_code_promo_program_ids |= program
 
