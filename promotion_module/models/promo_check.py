@@ -37,13 +37,14 @@ class PromoClass(models.Model):
     def _filter_not_ordered_reward_programs(self, order):
         """
         Returns the programs when the reward is actually in the order lines
-        If not, add reward product into order lines
         """
         programs = self.env['sale.coupon.program']
         for program in self:
             if program.reward_type == 'product' and \
                not order.order_line.filtered(lambda line: line.product_id == program.reward_product_id):
-                order.write({'order_line': [(0, False, order._put_reward_values_product(program))]})
+                #continue
+                #order.write({'order_line': [(0, False, order._put_reward_values_product(program))]})
+                pass
             elif program.reward_type == 'discount' and program.discount_apply_on == 'specific_product' and \
                not order.order_line.filtered(lambda line: line.product_id == program.discount_specific_product_id):
                 continue
