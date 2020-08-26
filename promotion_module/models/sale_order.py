@@ -45,7 +45,7 @@ class SalesClass(models.Model):
         if self.fiscal_position_id:
             taxes = self.fiscal_position_id.map_tax(taxes)
 
-         return {
+        return {
             'product_id': program.reward_product_id.id,
             'product_uom_qty': reward_qty,
             'is_reward_line': True, 
