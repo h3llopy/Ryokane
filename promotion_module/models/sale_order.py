@@ -126,8 +126,6 @@ class SalesClass(models.Model):
         def update_line(order, lines, values):
             '''Update the lines and return them if they should be deleted'''
             lines_to_remove = self.env['sale.order.line']
-            reward_values = values
-            reward_values = reward_values.update (price_unit = -price_unit, product_id = program.reward_product_id.id)
             # Check commit 6bb42904a03 for next if/else
             # Remove reward line if price or qty equal to 0
             if values['product_uom_qty'] and values['price_unit']:
