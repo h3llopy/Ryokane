@@ -172,5 +172,5 @@ class SalesClass(models.Model):
             else:
                 update_line(order, lines, values[0]).unlink()
                 reward_lines = order.order_line.filtered(lambda line: line.product_id == program.reward_product_id and line.is_reward_line == True)
-                reward_values = values.update (price_unit = -price_unit, product_id = program.reward_product_id.id)
+                reward_values = values.update (price_unit = -values["price_unit"], product_id = program.reward_product_id.id)
                 update_line(order, reward_lines, reward_values[0]).unlink()
