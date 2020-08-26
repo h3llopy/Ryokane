@@ -117,6 +117,6 @@ class SalesClass(models.Model):
 
         # Remove their reward lines
         invalid_lines |= order.order_line.filtered(lambda line: line.product_id.id in products_to_remove.ids)
-        invalid_lines |= order.order_line.filtered(lambda line: line.product_id.id in rewards_remove.ids and line.is_reward_line)
+        invalid_lines |= order.order_line.filtered(lambda line: line.product_id.id in rewards_to_remove.ids and line.is_reward_line)
         invalid_lines.unlink()
 
