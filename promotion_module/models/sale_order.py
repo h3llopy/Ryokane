@@ -173,4 +173,4 @@ class SalesClass(models.Model):
                 reward_values = values[0]
                 reward_values['price_unit'] = -reward_values['price_unit']
                 reward_values['product_id'] = program.reward_product_id.id
-                update_line(order, reward_lines, reward_values[0]).unlink()
+                update_line(order, reward_lines, reward_values).unlink()
