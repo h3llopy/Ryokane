@@ -110,7 +110,7 @@ class SalesClass(models.Model):
         programs_to_remove = applied_programs - applicable_programs
         _logger.info(programs_to_remove)
         products_to_remove = programs_to_remove.mapped('discount_line_product_id')
-        _logger.info(product_to_remove)
+        _logger.info(products_to_remove)
         rewards_to_remove = programs_to_remove.mapped('reward_product_id')
         _logger.info(rewards_to_remove)
 
