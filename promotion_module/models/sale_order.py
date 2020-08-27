@@ -53,7 +53,7 @@ class SalesClass(models.Model):
         _logger.info('reward_qty1')
         _logger.info(reward_qty)
         _logger.info(program.rule_products_domain)
-        if not program.rule_products_domain:
+        if program.rule_products_domain='':
             reward_qty = program.reward_product_quantity
         _logger.info('reward_qty2')
         _logger.info(reward_qty)
@@ -87,6 +87,8 @@ class SalesClass(models.Model):
 
         reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
         if not program.rule_products_domain:
+            reward_qty = program.reward_product_quantity
+        if program.rule_products_domain='':
             reward_qty = program.reward_product_quantity
 
         # Take the default taxes on the reward product, mapped with the fiscal position
