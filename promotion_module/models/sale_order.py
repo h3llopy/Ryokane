@@ -14,10 +14,15 @@ class SalesClass(models.Model):
         '''Apply new programs that are applicable'''
         self.ensure_one()
         order = self
+        _logger.info('_create_new_no_code_promo_reward_lines')
+        _logger.info(order.no_code_promo_program_ids)
         programs = order._get_applicable_no_code_promo_program()
+        _logger.info(programs)
         programs = programs._keep_only_most_interesting_auto_applied_global_discount_program()
+        _logger.info(programs)
         for program in programs:
             error_status = program._check_promo_code(order, False)
+            _logger.info(error_status)
             if not error_status.get('error'):
                 if program.promo_applicability == 'on_next_order':
                     order._create_reward_coupon(program)
@@ -26,6 +31,7 @@ class SalesClass(models.Model):
                         self.write({'order_line': [(0, False, self._put_reward_values_product(program))]})
                     self.write({'order_line': [(0, False, value) for value in self._get_reward_line_values(program)]})
                 order.no_code_promo_program_ids |= program
+               _logger.info(order.no_code_promo_program_ids)
 
     def _put_reward_values_product(self, program):
 
@@ -93,21 +99,30 @@ class SalesClass(models.Model):
         """
         self.ensure_one()
         order = self
-
+        _logger.info(order.no_code_promo_program_ids)
+        _logger.info('_remove_invalid_reward_lines')
         applicable_programs = order._get_applicable_no_code_promo_program() + order._get_applicable_programs() + order._get_valid_applied_coupon_program()
+        _logger.info(applicable_programs)
         applicable_programs = applicable_programs._keep_only_most_interesting_auto_applied_global_discount_program()
+        _logger.info(applicable_programs)
         applied_programs = order._get_applied_programs_with_rewards_on_current_order() + order._get_applied_programs_with_rewards_on_next_order()
+        _logger.info(applied_programs)
         programs_to_remove = applied_programs - applicable_programs
+        _logger.info(programs_to_remove)
         products_to_remove = programs_to_remove.mapped('discount_line_product_id')
+        _logger.info(product_to_remove)
         rewards_to_remove = programs_to_remove.mapped('reward_product_id')
+        _logger.info(rewards_to_remove)
 
         # delete reward line coming from an archived coupon (it will never be updated/removed when recomputing the order)
         invalid_lines = order.order_line.filtered(lambda line: line.is_reward_line and line.product_id.id not in (applied_programs).mapped('discount_line_product_id').ids)
+        _logger.info(invalid_lines)
         invalid_lines -= order.order_line.filtered(lambda line: line.is_reward_line and line.product_id.id in (applied_programs).mapped('reward_product_id').ids)
+        _logger.info(invalid_lines)
 
         # Invalid generated coupon for which we are not eligible anymore ('expired' since it is specific to this SO and we may again met the requirements)
         self.generated_coupon_ids.filtered(lambda coupon: coupon.program_id.discount_line_product_id.id in products_to_remove.ids).write({'state': 'expired'})
-        # Reset applied coupons for which we are not eligible anymore ('valid' so it can be use on another )
+        # Reset applied coupons for which we are not eligible anymore ('valid' so it can be use on another)
         coupons_to_remove = order.applied_coupon_ids.filtered(lambda coupon: coupon.program_id in programs_to_remove)
         coupons_to_remove.write({'state': 'new'})
 
@@ -117,12 +132,16 @@ class SalesClass(models.Model):
         order.applied_coupon_ids -= coupons_to_remove
 
         # Remove their reward lines
+        _logger.info(order.order_line.filtered(lambda line: line.product_id.id in products_to_remove.ids))
+        _logger.info(order.order_line.filtered(lambda line: line.product_id.id in rewards_to_remove.ids and line.is_reward_line))
+
         invalid_lines |= order.order_line.filtered(lambda line: line.product_id.id in products_to_remove.ids)
         invalid_lines |= order.order_line.filtered(lambda line: line.product_id.id in rewards_to_remove.ids and line.is_reward_line)
         invalid_lines.unlink()
 
     def _update_existing_reward_lines(self):
         '''Update values for already applied rewards'''
+        _logger.info('_update_existing_reward_lines')
         def update_line(order, lines, values):
             '''Update the lines and return them if they should be deleted'''
             lines_to_remove = self.env['sale.order.line']
@@ -137,14 +156,19 @@ class SalesClass(models.Model):
                 else:
                     values.update(price_unit=0.0)
                     order.write({'order_line': [(1, line.id, values) for line in lines]})
+            _logger.info('lines_to_remove')
+            _logger.info(lines_to_remove)
             return lines_to_remove
 
 
         self.ensure_one()
         order = self
         applied_programs = order._get_applied_programs_with_rewards_on_current_order()
+        _logger.info('applied_programs')
+        _logger.info(applied_programs)
         for program in applied_programs:
             values = order._get_reward_line_values(program)
+            _logger.info(values)
             lines = order.order_line.filtered(lambda line: line.product_id == program.discount_line_product_id)
             if program.reward_type == 'discount' and program.discount_type == 'percentage':
                 lines_to_remove = lines
