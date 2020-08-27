@@ -14,15 +14,10 @@ class SalesClass(models.Model):
         '''Apply new programs that are applicable'''
         self.ensure_one()
         order = self
-        _logger.info('_create_new_no_code_promo_reward_lines')
-        _logger.info(order.no_code_promo_program_ids)
         programs = order._get_applicable_no_code_promo_program()
-        _logger.info(programs)
         programs = programs._keep_only_most_interesting_auto_applied_global_discount_program()
-        _logger.info(programs)
         for program in programs:
             error_status = program._check_promo_code(order, False)
-            _logger.info(error_status)
             if not error_status.get('error'):
                 if program.promo_applicability == 'on_next_order':
                     order._create_reward_coupon(program)
@@ -31,32 +26,20 @@ class SalesClass(models.Model):
                         self.write({'order_line': [(0, False, self._put_reward_values_product(program))]})
                     self.write({'order_line': [(0, False, value) for value in self._get_reward_line_values(program)]})
                 order.no_code_promo_program_ids |= program
-                _logger.info(order.no_code_promo_program_ids)
 
     def _put_reward_values_product(self, program):
-        _logger.info('_put_reward_values_product')
         order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._is_valid_product(x.product_id))
-        _logger.info(order_lines)
         max_product_qty = sum(order_lines.mapped('product_uom_qty')) or 1
-        _logger.info('max_product_qty')
-        _logger.info(max_product_qty)
         # Remove needed quantity from reward quantity if same reward and rule product
         if program._is_valid_product(program.reward_product_id):
             #reward_product_qty = max_product_qty // (program.rule_min_quantity + program.reward_product_quantity)
             reward_product_qty = max_product_qty // (program.rule_min_quantity)
         else:
             reward_product_qty = min(max_product_qty, self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).product_uom_qty)
-        _logger.info('reward_product_qty')
-        _logger.info(reward_product_qty)
 
         reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
-        _logger.info('reward_qty1')
-        _logger.info(reward_qty)
-        _logger.info(program.rule_products_domain)
-        if program.rule_products_domain == []:
-            reward_qty = program.reward_product_quantity
-        _logger.info('reward_qty2')
-        _logger.info(reward_qty)
+        #if not program.rule_products_domain:
+        #    reward_qty = program.reward_product_quantity
 
         # Take the default taxes on the reward product, mapped with the fiscal position
         taxes = program.reward_product_id.taxes_id
@@ -86,10 +69,8 @@ class SalesClass(models.Model):
             reward_product_qty = min(max_product_qty, self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).product_uom_qty)
 
         reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
-        if not program.rule_products_domain:
-            reward_qty = program.reward_product_quantity
-        if program.rule_products_domain==[]:
-            reward_qty = program.reward_product_quantity
+        #if not program.rule_products_domain:
+        #    reward_qty = program.reward_product_quantity
 
         # Take the default taxes on the reward product, mapped with the fiscal position
         taxes = program.reward_product_id.taxes_id
@@ -115,26 +96,16 @@ class SalesClass(models.Model):
         """
         self.ensure_one()
         order = self
-        _logger.info(order.no_code_promo_program_ids)
-        _logger.info('_remove_invalid_reward_lines')
         applicable_programs = order._get_applicable_no_code_promo_program() + order._get_applicable_programs() + order._get_valid_applied_coupon_program()
-        _logger.info(applicable_programs)
         applicable_programs = applicable_programs._keep_only_most_interesting_auto_applied_global_discount_program()
-        _logger.info(applicable_programs)
         applied_programs = order._get_applied_programs_with_rewards_on_current_order() + order._get_applied_programs_with_rewards_on_next_order()
-        _logger.info(applied_programs)
         programs_to_remove = applied_programs - applicable_programs
-        _logger.info(programs_to_remove)
         products_to_remove = programs_to_remove.mapped('discount_line_product_id')
-        _logger.info(products_to_remove)
         rewards_to_remove = programs_to_remove.mapped('reward_product_id')
-        _logger.info(rewards_to_remove)
 
         # delete reward line coming from an archived coupon (it will never be updated/removed when recomputing the order)
         invalid_lines = order.order_line.filtered(lambda line: line.is_reward_line and line.product_id.id not in (applied_programs).mapped('discount_line_product_id').ids)
-        _logger.info(invalid_lines)
         invalid_lines -= order.order_line.filtered(lambda line: line.is_reward_line and line.product_id.id in (applied_programs).mapped('reward_product_id').ids)
-        _logger.info(invalid_lines)
 
         # Invalid generated coupon for which we are not eligible anymore ('expired' since it is specific to this SO and we may again met the requirements)
         self.generated_coupon_ids.filtered(lambda coupon: coupon.program_id.discount_line_product_id.id in products_to_remove.ids).write({'state': 'expired'})
@@ -148,8 +119,6 @@ class SalesClass(models.Model):
         order.applied_coupon_ids -= coupons_to_remove
 
         # Remove their reward lines
-        _logger.info(order.order_line.filtered(lambda line: line.product_id.id in products_to_remove.ids))
-        _logger.info(order.order_line.filtered(lambda line: line.product_id.id in rewards_to_remove.ids and line.is_reward_line))
 
         invalid_lines |= order.order_line.filtered(lambda line: line.product_id.id in products_to_remove.ids)
         invalid_lines |= order.order_line.filtered(lambda line: line.product_id.id in rewards_to_remove.ids and line.is_reward_line)
@@ -172,19 +141,14 @@ class SalesClass(models.Model):
                 else:
                     values.update(price_unit=0.0)
                     order.write({'order_line': [(1, line.id, values) for line in lines]})
-            _logger.info('lines_to_remove')
-            _logger.info(lines_to_remove)
             return lines_to_remove
 
 
         self.ensure_one()
         order = self
         applied_programs = order._get_applied_programs_with_rewards_on_current_order()
-        _logger.info('applied_programs')
-        _logger.info(applied_programs)
         for program in applied_programs:
             values = order._get_reward_line_values(program)
-            _logger.info(values)
             lines = order.order_line.filtered(lambda line: line.product_id == program.discount_line_product_id)
             if program.reward_type == 'discount' and program.discount_type == 'percentage':
                 lines_to_remove = lines
