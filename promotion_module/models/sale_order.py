@@ -34,17 +34,24 @@ class SalesClass(models.Model):
                 _logger.info(order.no_code_promo_program_ids)
 
     def _put_reward_values_product(self, program):
-
+        _logger.info('_put_reward_values_product')
         order_lines = (self.order_line - self._get_reward_lines()).filtered(lambda x: program._is_valid_product(x.product_id))
+        _logger.info(order_lines)
         max_product_qty = sum(order_lines.mapped('product_uom_qty')) or 1
+        _logger.info('max_product_qty')
+        _logger.info(max_product_qty)
         # Remove needed quantity from reward quantity if same reward and rule product
         if program._is_valid_product(program.reward_product_id):
             #reward_product_qty = max_product_qty // (program.rule_min_quantity + program.reward_product_quantity)
             reward_product_qty = max_product_qty // (program.rule_min_quantity)
         else:
             reward_product_qty = min(max_product_qty, self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).product_uom_qty)
+        _logger.info('reward_product_qty')
+        _logger.info(reward_product_qty)
 
         reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
+        _logger.info('reward_qty')
+        _logger.info(reward_qty)
 
         # Take the default taxes on the reward product, mapped with the fiscal position
         taxes = program.reward_product_id.taxes_id
