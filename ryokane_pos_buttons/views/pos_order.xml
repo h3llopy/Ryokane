@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">view.partner.form.birthday</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lang']" position="before">
+                    <field name="birthday"  />
+                </xpath>
+            </field>
+        </record>
         <record id="view_pos_pos_form" model="ir.ui.view">
             <field name="name">point_of_sale.view_pos_pos_form</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_pos_form" />
@@ -9,11 +19,11 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="practitioner" />
                     <field name="reservation" />
-                    <field name="salesman"/>
+                    <field name="salesman" />
                 </xpath>
             </field>
         </record>
-         <record id="view_pos_order_tree" model="ir.ui.view">
+        <record id="view_pos_order_tree" model="ir.ui.view">
             <field name="name">point_of_sale.view_pos_order_tree</field>
             <field name="inherit_id" ref="point_of_sale.view_pos_order_tree" />
             <field name="model">pos.order</field>
@@ -21,11 +31,21 @@
                 <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="practitioner" />
                     <field name="reservation" />
-                    <field name="salesman"/>
+                    <field name="salesman" />
+                </xpath>
+            </field>
+        </record>
+        <record id="view_report_pos_order_pivot" model="ir.ui.view">
+            <field name="name">report.pos.order.pivot.button</field>
+            <field name="inherit_id" ref="point_of_sale.view_report_pos_order_pivot" />
+            <field name="model">report.pos.order</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='price_total']" position="before">
+                    <field name="practitioner" type="row" string="Practitioner" />
+                    <field name="reservation" type="row" string="Peservation" />
+                    <field name="salesman" type="row" string="Saleman" />
                 </xpath>
             </field>
         </record>
     </data>
 </odoo>
-
-

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-    <t t-extend="PackLotLinePopupWidget">
+   <!--  <t t-extend="PackLotLinePopupWidget">
         <t t-jquery=".packlot-lines" t-operation="append">
             <div class="packlot-select">
                 <t t-if="widget.options.pack_lot_lines and widget.options.pack_lot_lines.lot_name">
@@ -15,7 +15,7 @@
                 </t>
             </div>
         </t>
-    </t>
+    </t> -->
     <t t-name="Practitioner">
         <div class='control-button'>
             <i class='fa fa-user' />
@@ -26,16 +26,24 @@
     </t>
     <t t-name="ReservationSource">
         <div class='control-button'>
-            <i class='fa fa-user' /> 
+            <i class='fa fa-user' />
             <span class="reservation">Reservation Source
             </span>
         </div>
     </t>
-       <t t-name="SalesPerson">
+    <t t-name="SalesPerson">
         <div class='control-button'>
-            <i class='fa fa-user' /> 
+            <i class='fa fa-user' />
             <span class="salesperson">Sales Person
             </span>
         </div>
+    </t>
+    <t t-extend="ClientDetailsEdit">
+        <t t-jquery=".client-details-right .client-detail:nth-child(2)" t-operation="after">
+            <div class='client-detail'>
+                <span class='label'>Birthday</span>
+                <input class='detail client-birthday' name='birthday' type='date' t-att-value='partner.birthday || ""'></input>
+            </div>
+        </t>
     </t>
 </templates>
