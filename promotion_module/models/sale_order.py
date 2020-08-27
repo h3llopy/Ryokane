@@ -31,7 +31,7 @@ class SalesClass(models.Model):
                         self.write({'order_line': [(0, False, self._put_reward_values_product(program))]})
                     self.write({'order_line': [(0, False, value) for value in self._get_reward_line_values(program)]})
                 order.no_code_promo_program_ids |= program
-               _logger.info(order.no_code_promo_program_ids)
+                _logger.info(order.no_code_promo_program_ids)
 
     def _put_reward_values_product(self, program):
 
