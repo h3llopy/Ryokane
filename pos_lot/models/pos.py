@@ -15,14 +15,13 @@ class pos_config(models.Model):
 class stock_production_lot(models.Model):
     _inherit = "stock.production.lot"
 
-    _logger.info('pos_stock_lot')
     total_qty = fields.Float("Total Qty", compute="_computeTotalQty")
-    pos_config = self.env['pos.config'].search([], limit=1)
-    pos_location_id = self.env['inventory.locations'].search([('id','=',pos_config.stock_location_id.id)])
-    _logger.info('pos_location:',pos_location_id)
     
     @api.multi
     def _computeTotalQty(self):
+        pos_config = self.env['pos.config'].search([], limit=1)
+        pos_location_id = self.env['stock.location'].search([('id','=',pos_config.stock_location_id.id)])
+        _logger.info('pos_location:',pos_location_id)
         for record in self:
             move_line = self.env['stock.move.line'].search([('lot_id','=',record.id)])
             record.total_qty = 0.0
