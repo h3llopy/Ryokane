@@ -38,8 +38,9 @@ class SalesClass(models.Model):
             reward_product_qty = min(max_product_qty, self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).product_uom_qty)
 
         reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
-        #if not program.rule_products_domain:
-        #    reward_qty = program.reward_product_quantity
+
+        if program.rule_min_quantity==1:
+            reward_qty = program.reward_product_quantity
 
         # Take the default taxes on the reward product, mapped with the fiscal position
         taxes = program.reward_product_id.taxes_id
@@ -69,8 +70,9 @@ class SalesClass(models.Model):
             reward_product_qty = min(max_product_qty, self.order_line.filtered(lambda x: x.product_id == program.reward_product_id).product_uom_qty)
 
         reward_qty = min(int(int(max_product_qty / program.rule_min_quantity) * program.reward_product_quantity), reward_product_qty)
-        #if not program.rule_products_domain:
-        #    reward_qty = program.reward_product_quantity
+
+        if program.rule_min_quantity==1:
+            reward_qty = program.reward_product_quantity
 
         # Take the default taxes on the reward product, mapped with the fiscal position
         taxes = program.reward_product_id.taxes_id

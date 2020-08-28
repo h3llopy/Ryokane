@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models, tools, _
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class pos_config(models.Model):
     _inherit = 'pos.config' 
@@ -12,18 +15,28 @@ class pos_config(models.Model):
 class stock_production_lot(models.Model):
     _inherit = "stock.production.lot"
 
+    _logger.info('pos_stock_lot')
     total_qty = fields.Float("Total Qty", compute="_computeTotalQty")
-
+    pos_config = self.env['pos.config'].search([], limit=1)
+    pos_location_id = self.env['inventory.locations'].search([('id','=',pos_config.stock_location_id.id)])
+    _logger.info('pos_location:',pos_location_id)
+    
     @api.multi
     def _computeTotalQty(self):
         for record in self:
             move_line = self.env['stock.move.line'].search([('lot_id','=',record.id)])
             record.total_qty = 0.0
             for rec in move_line:
-                if rec.location_dest_id.usage in ['internal', 'transit']:
+                #if rec.location_dest_id.usage in ['internal', 'transit']:
+                #    record.total_qty += rec.qty_done
+                #else:
+                #    record.total_qty -= rec.qty_done
+                if rec.location_dest_id == pos_location_id:
                     record.total_qty += rec.qty_done
-                else:
+                elif rec.location_id == pos_location_id:
                     record.total_qty -= rec.qty_done
+                else:
+                    continue 
 
 
 class PosOrder(models.Model):
