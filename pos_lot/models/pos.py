@@ -21,7 +21,6 @@ class stock_production_lot(models.Model):
     def _computeTotalQty(self):
         pos_config = self.env['pos.config'].search([], limit=1)
         pos_location_id = self.env['stock.location'].search([('id','=',pos_config.stock_location_id.id)])
-        _logger.info('pos_location:',pos_location_id)
         for record in self:
             move_line = self.env['stock.move.line'].search([('lot_id','=',record.id)])
             record.total_qty = 0.0
