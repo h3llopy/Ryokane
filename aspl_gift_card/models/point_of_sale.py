@@ -45,7 +45,6 @@ class PosOrder(models.Model):
             # create giftcard record
             if order.get('giftcard'):
                 for create_details in order.get('giftcard'):
-                    _logger.info('create_details: ',create_details)
                     vals = {
                         'card_no':create_details.get('giftcard_card_no'),
                         'card_value':create_details.get('giftcard_amount'),

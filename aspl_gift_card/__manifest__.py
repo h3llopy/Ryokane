@@ -12,7 +12,7 @@
 
 {
     'name': 'POS Gift Card',
-    'version': '1.5',
+    'version': '1.4',
     'category': 'Point of Sale',
     'summary': 'This module allows user to purchase giftcard,use giftcard and also recharge giftcard.',
     'description': """
@@ -23,11 +23,7 @@
     'price': 26.00,
     'currency': 'EUR',
     'version': '1.0.1',
-<<<<<<< HEAD
-    'depends': ['web', 'point_of_sale', 'base', 'sale'],
-=======
-    'depends': ['web', 'point_of_sale', 'base','sale_management'],
->>>>>>> parent of ac54f3c... Update __manifest__.py
+    'depends': ['web', 'point_of_sale', 'base'],
     'images': ['static/description/main_screenshot.png'],
     'data': [
         'security/ir.model.access.csv',
