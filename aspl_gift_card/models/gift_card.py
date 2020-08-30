@@ -150,7 +150,7 @@ class ResPartner(models.Model):
     recharged_ids = fields.One2many('aspl.gift.card.recharge', 'customer_id', string="List of recharged card")
     remaining_amount = fields.Char(compute=compute_amount , string="Remaining Amount", readonly=True)
 
-class SalesOder(models.Model)
+class SalesOder(models.Model):
 
     _inherit = 'sale.order'
 
