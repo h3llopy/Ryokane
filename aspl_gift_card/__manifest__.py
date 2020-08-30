@@ -23,7 +23,11 @@
     'price': 26.00,
     'currency': 'EUR',
     'version': '1.0.1',
+<<<<<<< HEAD
     'depends': ['web', 'point_of_sale', 'base', 'sale'],
+=======
+    'depends': ['web', 'point_of_sale', 'base','sale_management'],
+>>>>>>> parent of ac54f3c... Update __manifest__.py
     'images': ['static/description/main_screenshot.png'],
     'data': [
         'security/ir.model.access.csv',
