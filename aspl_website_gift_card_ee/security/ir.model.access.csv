@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_website_gift_card,access_website_gift_card,model_aspl_gift_card,,1,1,1,1
+access_website_gift_card_value,access_website_gift_card_value,model_gift_card_value,,1,1,1,1
+access_website_gift_card_use,access_website_gift_card_use,model_gift_card_use,,1,1,1,1
+access_website_gift_card_recharge,access_website_gift_card_recharge,model_aspl_gift_card_recharge,,1,1,1,1

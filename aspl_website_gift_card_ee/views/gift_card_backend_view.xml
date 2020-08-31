@@ -1,0 +1,120 @@
+<odoo>
+        <record id="gift_Card_form_view" model="ir.ui.view">
+            <field name="name">Gift Card</field>
+            <field name="model">aspl.gift.card</field>
+            <field name="arch" type="xml">
+                <form create="1" edit="1">
+                    <sheet>
+                        <group col="4">
+                            <field name="card_no"/>
+                            <field name="customer_id"/>
+                            <field name="card_value"/>
+                            <field name="issue_date"/>
+                        </group>
+                        <notebook>
+                            <page string="Card Usage">
+                                <field name="used_line">
+                                    <tree>
+                                        <field name="order_id"/>
+                                        <field name="order_date"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Card Recharge">
+                                <field name="recharge_line">
+                                    <tree>
+                                        <field name="card_id"/>
+                                        <field name="create_date"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="gift_Card_tree_view" model="ir.ui.view">
+            <field name="name">Gift Card</field>
+            <field name="model">aspl.gift.card</field>
+            <field name="arch" type="xml">
+                <tree create="1">
+                    <field name="card_no"/>
+                    <field name="customer_id"/>
+                    <field name="card_value"/>
+                    <field name="issue_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="gift_card_action" model="ir.actions.act_window">
+            <field name="name">Gift Card</field>
+            <field name="res_model">aspl.gift.card</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record id="gift_Card_value_tree_view" model="ir.ui.view">
+            <field name="name">Gift Card Value</field>
+            <field name="model">gift.card.value</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="amount"/>
+                    <field name="sequence"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+        <record id="gift_card_value_action" model="ir.actions.act_window">
+            <field name="name">Gift Card Value</field>
+            <field name="res_model">gift.card.value</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Gift Card" id="gift_card_view" parent="website.menu_website_configuration" sequence="2"/>
+        <menuitem action="gift_card_action" id="gift_card_view_child" parent="gift_card_view" sequence="1"/>
+        <menuitem action="gift_card_value_action" id="gift_card_value_view_child" parent="gift_card_view" sequence="2"/>
+
+        <record id="inherit_view_sale_order" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="card_type" widget="selection"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_untaxed']" position="after">
+                    <field name="gift_card_value"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Used Gift Card">
+                        <field name="gift_card_use_ids">
+                            <tree>
+                                <field name="card_id"/>
+                                <field name="order_date"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+            <record id="aspl_gift_card_form" model="ir.ui.view">
+            <field name="name">aspl.gift.card.form</field>
+            <field name="model">aspl.gift.card</field>
+            <field name="inherit_id" ref="aspl_gift_card.aspl_gift_card_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='card_type']" position="after">
+                    <field name="email" />
+                    <field name="user_name" />
+                    <field name="receiver_msg"/>
+                </xpath>
+         
+           
+            </field>
+        </record>
+</odoo>
+

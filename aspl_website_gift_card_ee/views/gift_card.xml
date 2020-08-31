@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    <data noupdate="1">-->
+<!--        <record id="product_gift_card" model="product.product">-->
+<!--            <field name="name">Gift Card</field>-->
+<!--            <field name="sale_ok" eval="True"/>-->
+<!--            <field name="list_price">0</field>-->
+<!--            <field name="type">service</field>-->
+<!--            <field name="description">This is Gift Card</field>-->
+<!--            <field name="taxes_id"/>-->
+<!--            <field name="is_gift_card" eval="True"/>-->
+<!--            <field name="supplier_taxes_id"/>-->
+<!--        </record>-->
+<!--    </data>-->
+
+    <template id="gift_card_frontend" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/aspl_website_gift_card_ee/static/src/js/jquery.validate.min.js"/>
+            <script type="text/javascript"
+                    src="/aspl_website_gift_card_ee/static/src/js/main.js"/>
+            <link rel="stylesheet" href="/aspl_website_gift_card_ee/static/src/css/main.css"/>
+        </xpath>
+    </template>
+
+    <template id="gift_card_link" name="My Reviews" inherit_id="portal.frontend_layout">
+        <xpath expr="//a[@id='o_logout']" position="before">
+            <a href="/gift_card" role="menuitem" class="dropdown-item">Gift Card</a>
+        </xpath>
+    </template>
+
+    <template name="Gift Card" id="gift_card">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container giftcard">
+                    <div class="container">
+                        <div class="fluid-tabs">
+                            <ul class="fluid-tabs__tabs nav nav-tabs" id="fluid-tabs-tabs" role="tablist">
+                                <li class="nav-item active">
+                                    <a t-att-class="'nav-link active' if page == 1 else 'nav-link'" id="todos-tab"
+                                       data-toggle="tab" href="#tab-one"
+                                       role="tab"
+                                       aria-controls="todos" aria-selected="true">Buy Gift Card
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a t-att-class="'nav-link active' if page == 2 else 'nav-link'" id="outras-tab"
+                                       data-toggle="tab" href="#tab-two" role="tab"
+                                       aria-controls="outras" aria-selected="true">Check Card Details
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="fluid-tabs-tab-content">
+                                <div t-att-class="'tab-pane fade show active' if page == 1 else 'tab-pane fade'"
+                                     id="tab-one" role="tabpanel"
+                                     aria-labelledby="tab-one-tab">
+                                    <h5 id="error-buy_card"
+                                        class="text-danger error_msg fluid-tabs__content-header" t-if="error">
+                                        <t t-esc="error"/>
+                                    </h5>
+                                    <form class="form-horizontal gift_card_purchase" method="post"
+                                          name="gift_card_purchase_form"
+                                          action="/buy_gift_card">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control"
+                                                       id="receiver_name" name="receiver_name"
+                                                       placeholder="Receiver Name" required="1"/>
+                                                <br/>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control"
+                                                       id="receiver_email" name="receiver_email"
+                                                       placeholder="Receiver Email" required="1"/>
+                                                <br/>
+                                            </div>
+                                                <div class="col-sm-12">
+                                                <input type="text" class="form-control"
+                                                       id="receiver_msg" name="receiver_msg"
+                                                       placeholder="Personal Message" required="1"/>
+                                                <br/>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="hidden" name="csrf_token"
+                                                       t-att-value="request.csrf_token()"/>
+                                                <select class="form-control" style="margin-bottom:25px"
+                                                        id="gift_card_value" required="1"
+                                                        name="gift_card_value">
+                                                    <option value="">Gift Card Value</option>
+                                                    <t t-foreach="request.env['gift.card.value'].sudo().search([],order='sequence')"
+                                                       t-as="gift_amount">
+                                                        <option t-att-value="gift_amount.id">
+                                                            <span t-esc='"{0:.2f}".format(gift_amount.amount or 0)'/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="Text" class="form-control"
+                                                       id="gift_qty" name="gift_qty"
+                                                       placeholder="Number of Gift Card" required="1"/>
+                                                <br/>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <button type="submit" id="buy_gift_card"
+                                                        class="btn btn-primary pull-right">
+                                                    Proceed
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div t-att-class="'tab-pane fade show active' if page == 2 else 'tab-pane fade'"
+                                     id="tab-two" role="tabpanel" aria-labelledby="tab-one-tab">
+                                    <h5 id="error-buy_card"
+                                        class="text-danger error_msg fluid-tabs__content-header" t-if="error_gift">
+                                        <t t-esc="error_gift"/>
+                                    </h5>
+                                    <form class="form-horizontal gift_card_purchase" method="post"
+                                          name="gift_card_purchase_form"
+                                          action="/check_gift_card_details">
+                                        <div class="col-sm-10">
+                                            <input type="hidden" name="csrf_token"
+                                                   t-att-value="request.csrf_token()"/>
+                                            <input type="text" pattern="[0-9]{10}" class="form-control"
+                                                   style="margin-bottom:25px"
+                                                   id="card_number"
+                                                   placeholder="Enter Gift Card Number" required=""
+                                                   name="card_number"/>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control"
+                                                   required=""
+                                                   id="pin"
+                                                   placeholder="Enter Gift Card Pin" name="pin"/>
+                                            <span id="errmsg" style="color:red"></span>
+                                            <br/>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <button type="submit" class="btn btn-primary pull-right">
+                                                Get Details
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="gift_card_set_pin" name="Gift Card Pin">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container">
+                    <div class="fluid-tabs">
+                        <ul class="fluid-tabs__tabs nav nav-tabs" id="fluid-tabs-tabs" role="tablist">
+                            <li class="nav-item active">
+                                <a class="nav-link active" id="todos-tab" data-toggle="tab" href="#tab-one" role="tab"
+                                   aria-controls="todos" aria-selected="true">Set Gift Card Pin
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="fluid-tabs-tab-content">
+                            <div class="tab-pane fade show active" id="tab-one" role="tabpanel"
+                                 aria-labelledby="tab-one-tab">
+                                <h5 class="fluid-tabs__content-header text-danger error_msg" id="error-set-pin">
+                                </h5>
+                                <form class="form-horizontal gift_card_purchase" method="post" id="giftcard_pin_form"
+                                      action="/set/pin">
+                                    <div class="form-group">
+                                        <div class="col-sm-10">
+                                            <h4>Card Number
+                                                <span t-esc="gift_card_id.card_no"/>
+                                            </h4>
+                                            <input type="hidden" name="csrf_token"
+                                                   t-att-value="request.csrf_token()"/>
+                                            <input type="hidden" name="id" t-att-value="gift_card_id.id"/>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="pin_no"
+                                                   placeholder="Enter Pin" required="required"
+                                                   pattern="[0-9]{4}"
+                                                   name="pin_no"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" required="required"
+                                                   id="cfm_pin_no" pattern="[0-9]{4}"
+                                                   placeholder="Re Enter Pin" name="pin"/>
+                                        </div>
+                                        <span id="errmsg" style="color:red"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" id="set_pin_new" class="btn btn-primary pull-right">Set
+                                                Pin
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="modal fade" id="SetPinModel" tabIndex="-1" role="dialog"
+                                     aria-labelledby="giftCardModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" style="color:black"
+                                                    id="giftCardModalLabel">Pin Set
+                                                    Successfully
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4>You can use this pin for check Gift Card Details</h4>
+                                                <h4>Your Card Number is
+                                                    <span t-esc="gift_card_id.card_no"/>
+                                                </h4>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-info"
+                                                        id="close_pin_model"
+                                                        data-dismiss="modal" title="Close Modal">Done
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="gift_card_details" name="Gift Card Pin">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container js_sale">
+                    <div class="row" id="success_pin_set"></div>
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-md-3 test_class">
+                            <div class="box">
+                                <span style="float:left" t-esc="gift_card.customer_id.image_small"
+                                      t-options="{'widget':'image'}"/>
+                                <h4 style="padding-left:5px;float:left">
+                                    <t t-esc="gift_card.customer_id.name"/>
+                                </h4>
+                                <h5 style="width:100%;float:left;text-align:center;">Card -
+                                    <span class="text-muted" t-esc="gift_card.card_no"/>
+                                </h5>
+                            </div>
+                            <div class="box balance">
+                                <p>Available Balance</p>
+                                <h3>
+                                    <t t-esc="gift_card.card_value"
+                                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                </h3>
+                            </div>
+                            <div class="box balance button">
+                                <a href="/gift_card" class="btn btn-gift">Back</a>
+                            </div>
+                            <div class="box balance button">
+                                <a href="#" class="btn btn-gift" data-toggle="modal" data-target="#SetPinModel">Change
+                                    Pin
+                                </a>
+                            </div>
+                            <div class="modal fade" id="SetPinModel" tabIndex="-1" role="dialog"
+                                 aria-labelledby="giftCardModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" style="color:black"
+                                                id="giftCardModalLabel">Change Pin
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body" style="padding-left: 15%;">
+                                            <h5 class="fluid-tabs__content-header text-danger error_msg"
+                                                id="error-set-pin"/>
+                                            <div class="form-group">
+                                                <div class="col-sm-10">
+                                                    <input type="hidden" name="csrf_token"
+                                                           t-att-value="request.csrf_token()"/>
+                                                    <input type="hidden" name="id" id="card_id"
+                                                           t-att-value="gift_card.id"/>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <input type="password" class="form-control" id="pin_no"
+                                                           placeholder="Enter Pin"
+                                                           name="pin_no"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-10">
+                                                    <input type="password" class="form-control"
+                                                           id="cfm_pin_no"
+                                                           placeholder="Re Enter Pin" name="pin"/>
+                                                </div>
+                                                <span id="errmsg" style="color:red"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button type="submit" id="set_pin"
+                                                            class="btn btn-primary pull-right">Set
+                                                        Pin
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box balance button" style="width: 89%;">
+                                <a href="#" class="btn btn-gift" data-toggle="modal" data-target="#RechargeCardModel">
+                                    Recharge Card
+                                </a>
+                            </div>
+                            <div class="modal fade" id="RechargeCardModel" tabIndex="-1" role="dialog"
+                                 aria-labelledby="giftCardModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" style="color:black"
+                                                id="giftCardModalLabel">Recharge Card
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="recharge_form row">
+                                                <h4 id="error-recharge"
+                                                    class="text-danger error_msg"></h4>
+                                                <div class="col-sm-8" style="float:left;">
+                                                    <input type="hidden" name="id" id="card_id"
+                                                           t-att-value="gift_card.id"/>
+                                                    <input type="Char"
+                                                           class="form-control"
+                                                           required="required"
+                                                           id="recharge_amount"
+                                                           placeholder="Enter Amount"
+                                                           name="recharge_amount"/>
+                                                </div>
+                                                <div class="recharge_submit col-sm-4" style="float:left;">
+                                                    <button type="submit"
+                                                            id="recharge_submit"
+                                                            class="btn btn-primary">
+                                                        Recharge
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 test_class">
+                            <div class="fluid-tabs" style="margin:0px;">
+                                <ul class="fluid-tabs__tabs nav nav-tabs" id="fluid-tabs-tabs" role="tablist">
+                                    <li class="nav-item active">
+                                        <a class="nav-link active" id="todos-tab"
+                                           data-toggle="tab" href="#tab-one"
+                                           role="tab"
+                                           aria-controls="todos" aria-selected="true">Usage History
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="outras-tab"
+                                           data-toggle="tab" href="#tab-two" role="tab"
+                                           aria-controls="outras" aria-selected="true">Recharge History
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="fluid-tabs-tab-content">
+                                    <div class="tab-pane fade show active"
+                                         id="tab-one" role="tabpanel"
+                                         aria-labelledby="tab-one-tab">
+                                        <t t-if="gift_card.used_line">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover" id="usage_history_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Order Date</th>
+                                                            <th>Order Name</th>
+                                                            <th>Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="usage_history_table_body">
+                                                        <tr t-foreach="gift_card.used_line" t-as="usage">
+                                                            <td>
+                                                                <t t-esc="usage.order_date"/>
+                                                            </td>
+                                                            <td>
+                                                                <t t-esc="usage.order_id.name"/>
+                                                            </td>
+                                                            <td>
+                                                                <t t-esc="usage.amount"/>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-12 text-center">
+                                                <ul class="pagination pagination-lg pager" id="usage_history_page"></ul>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <h5>No Usage History Found.</h5>
+                                        </t>
+                                    </div>
+                                    <div class="tab-pane fade"
+                                         id="tab-two" role="tabpanel" aria-labelledby="tab-one-tab">
+                                        <t t-if="gift_card.recharge_line">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover" id="recharge_history_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Recharge Date</th>
+                                                            <th>Amount</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="recharge_history_table_body">
+                                                        <tr t-foreach="gift_card.recharge_line" t-as="recharge">
+                                                            <td>
+                                                                <t t-esc="recharge.create_date" t-options="{'widget':'date'}"/>
+                                                            </td>
+                                                            <td>
+                                                                <t t-esc="recharge.amount"/>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-12 text-center">
+                                                <ul class="pagination pagination-lg pager"
+                                                    id="recharge_history_page"></ul>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <h5>No Recharge History Found.</h5>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="inherit_confirmation" inherit_id="website_sale.confirmation">
+        <xpath expr="//t[@t-set='payment_tx_id']" position="after">
+            <t t-if="gift and not gift_card_id">
+                <h4>You will receive gift card number by email.</h4>
+            </t>
+        </xpath>
+    </template>
+    <template id="inherit_payment" inherit_id="website_sale.payment">
+        <xpath expr="//div[@id='payment_method']" position="before">
+            <t t-if="not gift_card">
+                <button id="gift_card_pay" class="btn btn-success">Redeem Gift Card</button>
+            </t>
+            <div class="modal fade" id="addgiftcard" tabIndex="-1" role="dialog"
+                 aria-labelledby="giftCardModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="giftCardModalLabel">Redeem Gift Card
+                            </h4>
+                        </div>
+                        <div class="modal-body" id="gift_card_apply_form">
+                            <div class="giftcard row">
+                                <div class="col-md-12">
+                                    <h4 id="error-gift-apply" class="text-danger error_msg"></h4>
+                                    <div class="form-group">
+                                        <input type="hidden" name="csrf_token"
+                                               t-att-value="request.csrf_token()"/>
+                                        <div class="col-sm-12">
+                                            <input type="text" pattern="[0-9]{10}" class="form-control"
+                                                   id="card_number"
+                                                   placeholder="Enter Gift Card Number" required="required"
+                                                   name="card_number"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12">
+                                            <input type="password" class="form-control"
+                                                   required="required"
+                                                   id="pin"
+                                                   placeholder="Enter Gift Card Pin" name="pin"/>
+                                            <span id="errmsg" style="color:red"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-sm-offset-3 col-sm-3"/>
+                                        <div class="col-sm-offset-3 col-sm-3">
+                                            <button type="submit" id="gift_card_pay_form" class="btn btn-primary">
+                                                Proceed
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button id="cancel_pay" class="btn btn-danger">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-offset-3 col-sm-3"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body" id="gift_card_amount_pay" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4 id="error-gift-amount" class="text-danger error_msg"></h4>
+                                    <input type="hidden" id="id"/>
+                                    <div class="form-group">
+                                        <label for="card_amount">Available Balance</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" pattern="[0-9]{10}" class="form-control"
+                                                   id="card_amount"
+                                                   readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="total_amount">Total Amount</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" pattern="[0-9]{10}" class="form-control"
+                                                   id="total_amount" t-att-value="website.sale_get_order().amount_total"
+                                                   readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="amount">Amount</label>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control"
+                                                   required="required"
+                                                   id="amount"
+                                                   placeholder="Enter Gift Card Amount" name="amount"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-sm-offset-3 col-sm-3"/>
+                                        <div class="col-sm-offset-3 col-sm-3">
+                                            <button type="submit" id="gift_card_amount_pay_apply"
+                                                    class="btn btn-primary">
+                                                Apply
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <button id="cancel_amount_pay" class="btn btn-danger">
+                                                Cancel
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-offset-3 col-sm-3"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <template id="inherit_total" inherit_id="website_sale.total">
+        <xpath expr="//tr[@id='order_total']" position="before">
+            <tr id="order_gift_card" t-if="website_sale_order.gift_card_value">
+                <td class="text-right">
+                    <span id="applied_card">
+                        <i class="fa fa-info"/>
+                    </span>
+                    <strong>Gift Card:</strong>
+                </td>
+                <td class="text-xl-right">
+                    <strong t-field="website_sale_order.gift_card_value"
+                            t-options='{"widget": "monetary", "display_currency": website_sale_order.pricelist_id.currency_id}'/>
+                </td>
+            </tr>
+        </xpath>
+    </template>
+    <template id="view_applied_card" name="Applied Card Popover">
+        <div t-if="not gift_card_use_ids" class="well well-lg">
+            No Applied Card Found!
+        </div>
+        <t t-if="gift_card_use_ids">
+            <t t-foreach="gift_card_use_ids" t-as="gift_card_use_id">
+                <div class="row mb8 cart_line">
+                    <div style="float:left;margin-left:10px;width:80%;">
+                        <b>
+                            Card -
+                            <span t-field="gift_card_use_id.card_id.card_no"/>
+                        </b>
+                        <br/>
+                        <span>Amount -
+                            <span t-field="gift_card_use_id.amount"
+                                  t-options="{'widget': 'monetary','display_currency': website.currency_id}"/>
+                        </span>
+                    </div>
+                    <div style="float:right;margin-right:10px">
+                        <form action="/cancel_gift_card" method="post" t-if="not confirm_order">
+                            <input type="hidden" name="csrf_token"
+                                   t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="card_id"
+                                   t-att-value="gift_card_use_id.card_id.id"/>
+                            <input type="hidden" name="amount"
+                                   t-att-value="gift_card_use_id.amount"/>
+                            <button type="submit">
+                                <i class="fa fa-times"/>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

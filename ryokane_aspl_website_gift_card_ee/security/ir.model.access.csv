@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gift_card_value,access_gift_card_value,aspl_website_gift_card_ee.model_gift_card_value,base.group_user,1,1,1,1
+access_gift_card_value_public,access_gift_card_value_public,aspl_website_gift_card_ee.model_gift_card_value,base.group_public,1,1,1,1
