@@ -154,7 +154,7 @@ class SalesOder(models.Model):
 
     _inherit = 'sale.order'
 
-    card_ids = fields.one2many('aspl.gift.card', 'sale_order_id', string="List of card")
+    card_ids = fields.One2many('aspl.gift.card', 'sale_order_id', string="List of card")
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
