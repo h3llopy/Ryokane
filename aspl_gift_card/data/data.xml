@@ -132,9 +132,9 @@
         #    <field name="supplier_taxes_id" />
         #</record>
 
-	</data>
+	#</data>
 
-    <data noupdate='1'>
+    #<data noupdate='1'>
 
         <record forcecreate="True" id="expiration_coupon" model="ir.cron">
             <field name="name">Expiration Coupon Mail</field>
