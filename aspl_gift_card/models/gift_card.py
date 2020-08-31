@@ -63,6 +63,7 @@ class aspl_gift_card(models.Model):
     recharge_line = fields.One2many('aspl.gift.card.recharge', 'card_id', string="Recharge Line")
     email = fields.Char(string="Email")
     user_name = fields.Char(string="User Name")
+    sale_order_id = fields.Many2one('sale.order', string="Sale Order")
 
     @api.multi
     def write(self, vals):
@@ -148,5 +149,12 @@ class ResPartner(models.Model):
     used_ids = fields.One2many('aspl.gift.card.use', 'customer_id', string="List of used card")
     recharged_ids = fields.One2many('aspl.gift.card.recharge', 'customer_id', string="List of recharged card")
     remaining_amount = fields.Char(compute=compute_amount , string="Remaining Amount", readonly=True)
+
+class SalesOder(models.Model):
+
+    _inherit = 'sale.order'
+
+    card_ids = fields.One2many('aspl.gift.card', 'sale_order_id', string="List of card")
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
