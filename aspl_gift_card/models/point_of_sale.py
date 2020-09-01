@@ -29,6 +29,7 @@ class PosConfig(models.Model):
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
+    card_ids = fields.One2many('aspl.gift.card', 'pos_order_id', string="List of cards bought")
 
     @api.model
     def create_from_ui(self, orders):

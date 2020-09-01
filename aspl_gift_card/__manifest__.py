@@ -12,7 +12,6 @@
 
 {
     'name': 'POS Gift Card',
-    'version': '1.7',
     'category': 'Point of Sale',
     'summary': 'This module allows user to purchase giftcard,use giftcard and also recharge giftcard.',
     'description': """
@@ -22,7 +21,7 @@
     'website': "http://www.acespritech.com",
     'price': 26.00,
     'currency': 'EUR',
-    'version': '1.6',
+    'version': '1.8',
     'depends': ['web', 'point_of_sale', 'base', 'sale'],
     'images': ['static/description/main_screenshot.png'],
     'data': [

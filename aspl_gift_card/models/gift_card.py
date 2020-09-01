@@ -64,6 +64,7 @@ class aspl_gift_card(models.Model):
     email = fields.Char(string="Email")
     user_name = fields.Char(string="User Name")
     sale_order_id = fields.Many2one('sale.order', string="Sale Order")
+    pos_order_id = fields.Many2one('pos.order', string="POS Order")
 
     @api.multi
     def write(self, vals):
@@ -154,7 +155,7 @@ class SalesOder(models.Model):
 
     _inherit = 'sale.order'
 
-    card_ids = fields.One2many('aspl.gift.card', 'sale_order_id', string="List of card")
+    card_ids = fields.One2many('aspl.gift.card', 'sale_order_id', string="List of cards bought")
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
