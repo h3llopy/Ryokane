@@ -56,7 +56,7 @@ class PosOrder(models.Model):
                         'user_name': create_details.get('user_name'),
                         'email': create_details.get('email'),
                         'receiver_msg': create_details.get('receiver_msg'),
-                        'sale_order_id': order_obj.id,
+                        'pos_order_id': order_obj.id,
                     }
                     self.env['aspl.gift.card'].create(vals)
 
