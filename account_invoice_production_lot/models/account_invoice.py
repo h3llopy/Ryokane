@@ -48,7 +48,7 @@ class AccountInvoiceLine(models.Model):
                         ))
                     else:
                         lot_strings.append('<li style="word-spacing:5px">%s %s Q :(%s) DDM :%s</li>' % (
-                            _('Lot'), sml.lot_id.name, sml.qty_done,sml.lot_id.use_date
+                            _('Lot'), sml.lot_id.name, sml.qty_done,sml.lot_id.use_date.date()
                         ))
             if lot_strings:
                 note += ' '.join(lot_strings)
