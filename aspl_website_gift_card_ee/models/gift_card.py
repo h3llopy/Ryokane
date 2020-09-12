@@ -108,6 +108,7 @@ class SaleOrder(models.Model):
                                 'user_name': so.receiver_name,
                                 "card_type": self.card_type.id,
                                 "receiver_msg": self.receiver_msg,
+                                "sale_order_id": so.id
                             })
                             qty -= 1
                             time.sleep(2)

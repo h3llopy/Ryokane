@@ -208,7 +208,7 @@
                         <tr>
                             <td>Paid </td>
                             <td>
-                                <input type="checkbox" id="checkbox_paid" class="checkbox_paid" default="0" style="width:10% !important;" />
+                                <input type="checkbox" id="checkbox_paid" class="checkbox_paid" default="1" style="width:10% !important;" />
                             </td>
                         </tr>
                     </table>

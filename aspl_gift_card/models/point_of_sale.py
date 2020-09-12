@@ -29,6 +29,7 @@ class PosConfig(models.Model):
 
 class PosOrder(models.Model):
     _inherit = 'pos.order'
+    card_ids = fields.One2many('aspl.gift.card', 'pos_order_id', string="List of cards bought")
 
     @api.model
     def create_from_ui(self, orders):
@@ -45,6 +46,7 @@ class PosOrder(models.Model):
             # create giftcard record
             if order.get('giftcard'):
                 for create_details in order.get('giftcard'):
+                    _logger.info('create_details: ',create_details)
                     vals = {
                         'card_no':create_details.get('giftcard_card_no'),
                         'card_value':create_details.get('giftcard_amount'),
@@ -54,6 +56,7 @@ class PosOrder(models.Model):
                         'user_name': create_details.get('user_name'),
                         'email': create_details.get('email'),
                         'receiver_msg': create_details.get('receiver_msg'),
+                        'pos_order_id': order_obj.id,
                     }
                     self.env['aspl.gift.card'].create(vals)
 
