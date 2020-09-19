@@ -1,0 +1,31 @@
+@mixin flex-display {
+    -webkit-display: flex;
+    -moz-display: flex;
+    -ms-display: flex;
+    -o-display: flex;
+    display: flex;
+}
+@mixin align-items($align) {
+    -webkit-box-align: $align;
+    -webkit-align-items: $align;
+    -moz-box-align: $align;
+    -ms-flex-align: $align;
+    -ms-grid-row-align: $align;
+    align-items: $align;
+};
+
+.o_lang_flag {
+  ul {
+    & > li {
+      &.selected {
+        text-decoration: none;
+        color: #262626;
+        background-color: #f5f5f5
+      }
+    }
+  }
+  a.js_lang {
+    @include flex-display;
+    @include align-items(center);
+  }
+}

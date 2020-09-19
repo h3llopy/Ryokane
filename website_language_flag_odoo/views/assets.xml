@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_frontend" name="Website Language assets" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/website_language_flag_odoo/static/src/scss/website_lang.scss"/>
+        </xpath>
+    </template>
+
+</odoo>

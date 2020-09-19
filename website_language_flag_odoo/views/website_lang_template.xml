@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="language_image_flag" inherit_id="website.layout" name="Language Flag" active="False" customize_show="True">
+        <xpath expr="//header//ul[@id='top_menu']/li" position="before">
+            <li class="divider" t-ignore="true"/>
+            <li class="dropdown o_lang_flag" t-ignore="true">
+                <a href="#" class="nav-link dropdown-toggle js_lang" data-toggle="dropdown" aria-expanded="true">
+                    <t t-foreach="website.language_ids" t-as="lg">
+                        <t t-if="lg.code == request.lang">
+                            <img class="img o_flag_icon mr4" t-attf-src="/website/image/res.lang/{{lg.id}}/flag_image"
+                                 height="15" width="20" t-att-title="lg.name"/>
+                            <t t-esc="lg.name.split('/').pop()"/>
+                            <span class="caret"/>
+                        </t>
+                    </t>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <t t-foreach="website.language_ids" t-as="lg">
+                        <li t-att-class="'selected' if lg.code == request.lang else None">
+                            <a t-att-href="url_for(request.httprequest.path + '?' + keep_query(), lang=lg.code)"
+                               t-att-data-default-lang="(editable or translatable) and 'true' if website and lg.code == website.default_lang_code else None"
+                               t-att-data-lang="lg.code"
+                               class="js_change_lang js_lang dropdown-item">
+                                <img class="img o_flag_icon mr4" t-attf-src="/website/image/res.lang/{{lg.id}}/flag_image"
+                                     height="15" width="20" t-att-title="lg.name"/>
+                                <t t-esc="lg.name.split('/').pop()"/>
+                            </a>
+                        </li>
+                    </t>
+                </ul>
+            </li>
+        </xpath>
+    </template>
+</odoo>
